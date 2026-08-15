@@ -3,8 +3,7 @@ import { Link } from 'react-router-dom';
 import { BookOpen, Atom, Globe, Calculator, Award, User, LogOut } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 import AuthModal from '../components/AuthModal';
-import { Link } from 'react-router-dom';
-import { Trophy } from 'lucide-react';
+
 
 <Link
   to="/leaderboard"
