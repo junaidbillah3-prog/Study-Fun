@@ -1,34 +1,47 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 
 export default function MemeModal({ activeMeme, onClose }) {
+  const videoRef = useRef(null);
+  const audioRef = useRef(null);
+
+  useEffect(() => {
+    // Force playback programmatically to bypass browser autoplay blocks
+    if (activeMeme?.type === 'video' && videoRef.current) {
+      videoRef.current.play().catch((err) => console.error('Video playback blocked:', err));
+    } else if (activeMeme?.type === 'audio' && audioRef.current) {
+      audioRef.current.play().catch((err) => console.error('Audio playback blocked:', err));
+    }
+  }, [activeMeme]);
+
   if (!activeMeme) return null;
 
   return (
     <div className="fixed inset-0 bg-black/80 flex items-center justify-center p-4 z-50">
       <div className="bg-gray-800 rounded-2xl p-6 max-w-lg w-full flex flex-col items-center border border-gray-700 shadow-2xl">
         
-        {/* Render MP4 Video if type is video */}
+        {/* MP4 Video Player */}
         {activeMeme.type === 'video' && (
           <video
+            ref={videoRef}
             src={activeMeme.video}
-            autoPlay
             playsInline
+            controls={false}
             className="w-full max-h-80 object-contain rounded-xl"
             onEnded={onClose}
           />
         )}
 
-        {/* Render Image + Audio if type is audio */}
+        {/* Audio + Image Player */}
         {activeMeme.type === 'audio' && (
-          <div className="flex flex-col items-center">
+          <div className="flex flex-col items-center w-full">
             <img
               src={activeMeme.image}
               alt="Meme reaction"
               className="w-full max-h-80 object-contain rounded-xl mb-4"
             />
             <audio
+              ref={audioRef}
               src={activeMeme.audio}
-              autoPlay
               onEnded={onClose}
             />
           </div>
