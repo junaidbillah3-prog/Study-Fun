@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { supabase } from '../lib/supabaseClient';
+import { supabase } from '../supabaseClient';
 import { Trophy, Medal, ArrowLeft } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
@@ -16,7 +16,7 @@ export default function Leaderboard() {
     const { data, error } = await supabase
       .from('leaderboard')
       .select('*')
-      .order('score', { ascending: false })
+      .order('points', { ascending: false })
       .limit(20);
 
     if (error) {
@@ -25,13 +25,6 @@ export default function Leaderboard() {
       setScores(data || []);
     }
     setLoading(false);
-  };
-
-  const formatSubject = (subject) => {
-    return subject
-      .split('-')
-      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-      .join(' ');
   };
 
   return (
@@ -44,15 +37,15 @@ export default function Leaderboard() {
           <ArrowLeft className="w-4 h-4" /> Back to Dashboard
         </Link>
         <div className="flex items-center gap-2 text-yellow-400 font-extrabold text-xl">
-          <Trophy className="w-6 h-6" /> Global Leaderboard
+          <Trophy className="w-6 h-6" /> Lifetime Points Leaderboard
         </div>
       </div>
 
       <div className="bg-gray-800 border border-gray-700 rounded-3xl p-6 shadow-2xl overflow-hidden">
         {loading ? (
-          <p className="text-center text-gray-400 py-8">Loading high scores...</p>
+          <p className="text-center text-gray-400 py-8">Loading rankings...</p>
         ) : scores.length === 0 ? (
-          <p className="text-center text-gray-400 py-8">No scores recorded yet. Be the first to take a quiz!</p>
+          <p className="text-center text-gray-400 py-8">No scores recorded yet. Take a quiz to gain points!</p>
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full text-left border-collapse">
@@ -60,8 +53,7 @@ export default function Leaderboard() {
                 <tr className="border-b border-gray-700 text-gray-400 text-sm">
                   <th className="py-3 px-4">Rank</th>
                   <th className="py-3 px-4">Student</th>
-                  <th className="py-3 px-4">Subject</th>
-                  <th className="py-3 px-4 text-right">Score</th>
+                  <th className="py-3 px-4 text-right">Total Points</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-700/50 text-gray-200 font-medium">
@@ -74,9 +66,8 @@ export default function Leaderboard() {
                       {index > 2 && <span className="text-gray-500 font-bold pl-2">#{index + 1}</span>}
                     </td>
                     <td className="py-4 px-4 font-semibold text-white">{entry.username}</td>
-                    <td className="py-4 px-4 text-blue-400">{formatSubject(entry.subject_id)}</td>
-                    <td className="py-4 px-4 text-right font-extrabold text-emerald-400">
-                      {entry.score} / {entry.total}
+                    <td className="py-4 px-4 text-right font-extrabold text-emerald-400 text-lg">
+                      {entry.points.toLocaleString()} pts
                     </td>
                   </tr>
                 ))}

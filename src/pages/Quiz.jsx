@@ -15,7 +15,7 @@ export default function Quiz() {
   const [isCompleted, setIsCompleted] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
 
-  // Load 10 random questions on initial mount or when subject changes
+
   useEffect(() => {
     loadNewQuiz();
   }, [subjectId]);
@@ -61,20 +61,46 @@ const handleNextQuestion = async () => {
   } else {
     setIsCompleted(true);
 
-  
-    const { data: { user } } = await supabase.auth.getUser();
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+      const displayName = user
+        ? (user.user_metadata?.full_name || user.email.split('@')[0])
+        : 'Guest Scholar';
 
+      
+      const queryField = user ? 'user_id' : 'username';
+      const queryValue = user ? user.id : displayName;
 
-    if (user) {
-      await supabase.from('leaderboard').insert([
-        {
-          user_id: user.id,
-          username: user.user_metadata?.full_name || user.email.split('@')[0],
-          subject_id: subjectId,
-          score: score,
-          total: questions.length
-        }
-      ]);
+      const { data: existingEntry } = await supabase
+        .from('leaderboard')
+        .select('*')
+        .eq(queryField, queryValue)
+        .maybeSingle();
+
+      if (existingEntry) {
+        
+        await supabase
+          .from('leaderboard')
+          .update({
+            points: existingEntry.points + score,
+            username: displayName,
+            updated_at: new Date()
+          })
+          .eq('id', existingEntry.id);
+      } else {
+        
+        await supabase
+          .from('leaderboard')
+          .insert([
+            {
+              user_id: user ? user.id : null,
+              username: displayName,
+              points: score
+            }
+          ]);
+      }
+    } catch (err) {
+      console.error('Error updating cumulative score:', err);
     }
   }
 };
