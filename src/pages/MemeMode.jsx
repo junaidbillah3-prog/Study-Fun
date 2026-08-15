@@ -147,6 +147,7 @@ export default function MemeMode() {
   const [answers, setAnswers] = useState([]);
   const [connections, setConnections] = useState({}); 
   const [draggedPromptId, setDraggedPromptId] = useState(null);
+  const [selectedPromptId, setSelectedPromptId] = useState(null);
   
 
   const [isCompleted, setIsCompleted] = useState(false);
