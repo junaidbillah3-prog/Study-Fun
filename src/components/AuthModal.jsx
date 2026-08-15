@@ -26,7 +26,7 @@ export default function AuthModal({ isOpen, onClose }) {
     if (isSignUp) {
       const { error } = await supabase.auth.signUp({ email, password });
       if (error) setError(error.message);
-      else setMessage('Success! Check your email for confirmation.');
+      else setMessage('Success!.');
     } else {
       const { error } = await supabase.auth.signInWithPassword({ email, password });
       if (error) setError(error.message);
