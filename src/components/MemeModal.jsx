@@ -5,11 +5,18 @@ export default function MemeModal({ activeMeme, onClose }) {
   const audioRef = useRef(null);
 
   useEffect(() => {
-    // Force playback programmatically to bypass browser autoplay blocks
-    if (activeMeme?.type === 'video' && videoRef.current) {
-      videoRef.current.play().catch((err) => console.error('Video playback blocked:', err));
-    } else if (activeMeme?.type === 'audio' && audioRef.current) {
-      audioRef.current.play().catch((err) => console.error('Audio playback blocked:', err));
+    if (!activeMeme) return;
+
+    if (activeMeme.type === 'video' && videoRef.current) {
+      videoRef.current.currentTime = 0;
+      videoRef.current.play().catch((err) => {
+        console.warn('Video playback prevented by browser:', err);
+      });
+    } else if (activeMeme.type === 'audio' && audioRef.current) {
+      audioRef.current.currentTime = 0;
+      audioRef.current.play().catch((err) => {
+        console.warn('Audio playback prevented by browser:', err);
+      });
     }
   }, [activeMeme]);
 
@@ -19,13 +26,13 @@ export default function MemeModal({ activeMeme, onClose }) {
     <div className="fixed inset-0 bg-black/80 flex items-center justify-center p-4 z-50">
       <div className="bg-gray-800 rounded-2xl p-6 max-w-lg w-full flex flex-col items-center border border-gray-700 shadow-2xl">
         
-        {/* MP4 Video Player */}
+        {/* Video Player */}
         {activeMeme.type === 'video' && (
           <video
             ref={videoRef}
             src={activeMeme.video}
+            preload="auto"
             playsInline
-            controls={false}
             className="w-full max-h-80 object-contain rounded-xl"
             onEnded={onClose}
           />
@@ -42,6 +49,7 @@ export default function MemeModal({ activeMeme, onClose }) {
             <audio
               ref={audioRef}
               src={activeMeme.audio}
+              preload="auto"
               onEnded={onClose}
             />
           </div>
