@@ -21,7 +21,7 @@ export const MEME_ASSETS = {
     },
     {
       type: 'video',
-      video: 'https://cezcbppjqqnmdmfvnalz.supabase.co/storage/v1/object/public/Assets/Mp4/what__meme_h264_68204.mp4'
+      video: 'https://cezcbppjqqnmdmfvnalz.supabase.co/storage/v1/object/public/Assets/Mp4/oh_my_god_bruh_oh_hell_nah_man_wtf_bro_h264_66596.mp4'
     }
   ],
   correct: [
@@ -32,7 +32,7 @@ export const MEME_ASSETS = {
     },
     {
       type: 'audio',
-      audio: 'https://cezcbppjqqnmdmfvnalz.supabase.co/storage/v1/object/public/Assets/audio/correct_ding_sound_effect_hd_mp3_67350.mp3',
+      audio: 'https://cezcbppjqqnmdmfvnalz.supabase.co/storage/v1/object/public/Assets/audio/correct2.mp3',
       image: 'https://cezcbppjqqnmdmfvnalz.supabase.co/storage/v1/object/public/Assets/Png/emoji.jpg'
     },
     {
