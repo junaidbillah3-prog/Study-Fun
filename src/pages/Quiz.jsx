@@ -1,3 +1,4 @@
+import { supabase } from '../supabaseClient';
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { getRandomQuestions } from '../data/questions';
@@ -52,15 +53,31 @@ export default function Quiz() {
     }
   };
 
-  const handleNextQuestion = () => {
-    if (currentIndex + 1 < questions.length) {
-      setCurrentIndex((prev) => prev + 1);
-      setSelectedOption(null);
-      setIsSubmitted(false);
-    } else {
-      setIsCompleted(true);
+const handleNextQuestion = async () => {
+  if (currentIndex + 1 < questions.length) {
+    setCurrentIndex((prev) => prev + 1);
+    setSelectedOption(null);
+    setIsSubmitted(false);
+  } else {
+    setIsCompleted(true);
+
+  
+    const { data: { user } } = await supabase.auth.getUser();
+
+
+    if (user) {
+      await supabase.from('leaderboard').insert([
+        {
+          user_id: user.id,
+          username: user.user_metadata?.full_name || user.email.split('@')[0],
+          subject_id: subjectId,
+          score: score,
+          total: questions.length
+        }
+      ]);
     }
-  };
+  }
+};
 
   if (isCompleted) {
     return (
