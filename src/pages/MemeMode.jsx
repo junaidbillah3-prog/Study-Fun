@@ -1,10 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { supabase } from '../lib/supabase';
-import { ArrowLeft, Sparkles, RefreshCw, Trophy } from 'lucide-react';
-
-const SUPABASE_PROJECT_URL = import.meta.env.VITE_SUPABASE_URL;
-const BUCKET_NAME = 'meme-assets';
+import { ArrowLeft, Sparkles } from 'lucide-react';
+import { getRandomMeme } from '../data/memeAssets';
 
 // Sample meme matching pairs per subject
 const SAMPLE_PAIRS = {
@@ -39,7 +36,9 @@ export default function MemeMode() {
   const [draggedPromptId, setDraggedPromptId] = useState(null);
   
   // Active Meme Overlay State
-  const [activeMeme, setActiveMeme] = useState(null); // { type: 'correct'|'wrong', mediaUrl: '', isVideo: boolean }
+  const [activeMeme, setActiveMeme] = useState(null);
+  
+  const videoRef = useRef(null);
   const audioRef = useRef(null);
 
   useEffect(() => {
@@ -48,39 +47,34 @@ export default function MemeMode() {
     setAnswers([...pairs].sort(() => Math.random() - 0.5));
   }, [subjectId]);
 
-  const stopCurrentAudio = () => {
+  // Programmatically trigger media playback when a meme is selected
+  useEffect(() => {
+    if (!activeMeme) return;
+
+    if (activeMeme.type === 'video' && videoRef.current) {
+      videoRef.current.currentTime = 0;
+      videoRef.current.play().catch((err) => console.warn('Video playback blocked:', err));
+    } else if (activeMeme.type === 'audio' && audioRef.current) {
+      audioRef.current.currentTime = 0;
+      audioRef.current.play().catch((err) => console.warn('Audio playback blocked:', err));
+    }
+  }, [activeMeme]);
+
+  const stopCurrentMedia = () => {
     if (audioRef.current) {
       audioRef.current.pause();
       audioRef.current.currentTime = 0;
-      audioRef.current = null;
+    }
+    if (videoRef.current) {
+      videoRef.current.pause();
+      videoRef.current.currentTime = 0;
     }
   };
 
   const triggerMeme = (isCorrect) => {
-    stopCurrentAudio();
-
-    const mediaFileName = isCorrect ? 'correct.mp4' : 'wrong.mp4';
-    const audioFileName = isCorrect ? 'correct.mp3' : 'wrong.mp3';
-
-    const mediaUrl = `${SUPABASE_PROJECT_URL}/storage/v1/object/public/${BUCKET_NAME}/${mediaFileName}`;
-    const audioUrl = `${SUPABASE_PROJECT_URL}/storage/v1/object/public/${BUCKET_NAME}/${audioFileName}`;
-
-    const isVideo = mediaFileName.endsWith('.mp4');
-
-    setActiveMeme({
-      type: isCorrect ? 'correct' : 'wrong',
-      mediaUrl,
-      isVideo,
-    });
-
-    const audio = new Audio(audioUrl);
-    audioRef.current = audio;
-    
-    audio.play().catch((err) => console.log('Audio playback prevented:', err));
-
-    audio.onended = () => {
-      setActiveMeme(null);
-    };
+    stopCurrentMedia();
+    const meme = getRandomMeme(isCorrect);
+    setActiveMeme(meme);
   };
 
   // Drag and Drop Handlers
@@ -93,7 +87,6 @@ export default function MemeMode() {
     e.preventDefault();
     if (!draggedPromptId) return;
 
-    // Check if correct match
     const isCorrect = draggedPromptId === answerId;
 
     setConnections((prev) => ({
@@ -106,7 +99,7 @@ export default function MemeMode() {
   };
 
   const handleDisconnect = (promptId) => {
-    stopCurrentAudio();
+    stopCurrentMedia();
     setActiveMeme(null);
 
     setConnections((prev) => {
@@ -195,22 +188,32 @@ export default function MemeMode() {
         </div>
       </div>
 
-      {/* Floating Meme Popup (Bottom Right) */}
+      {/* Floating Meme Popup */}
       {activeMeme && (
-        <div className="fixed bottom-6 right-6 z-50 bg-gray-900 border-2 border-purple-500 rounded-2xl p-2 shadow-2xl max-w-[220px] animate-bounce">
-          {activeMeme.isVideo ? (
+        <div className="fixed bottom-6 right-6 z-50 bg-gray-900 border-2 border-purple-500 rounded-2xl p-2 shadow-2xl max-w-[240px]">
+          {activeMeme.type === 'video' ? (
             <video
-              src={activeMeme.mediaUrl}
-              autoPlay
+              ref={videoRef}
+              src={activeMeme.video}
+              preload="auto"
               playsInline
               className="rounded-xl w-full h-auto object-cover"
+              onEnded={() => setActiveMeme(null)}
             />
           ) : (
-            <img
-              src={activeMeme.mediaUrl}
-              alt="Meme Popup"
-              className="rounded-xl w-full h-auto object-cover"
-            />
+            <div className="flex flex-col items-center">
+              <img
+                src={activeMeme.image}
+                alt="Meme Popup"
+                className="rounded-xl w-full h-auto object-cover"
+              />
+              <audio
+                ref={audioRef}
+                src={activeMeme.audio}
+                preload="auto"
+                onEnded={() => setActiveMeme(null)}
+              />
+            </div>
           )}
         </div>
       )}
