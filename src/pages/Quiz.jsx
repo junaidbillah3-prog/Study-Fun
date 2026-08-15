@@ -20,29 +20,13 @@ export default function Quiz() {
   }, [subjectId]);
 
   const loadNewQuiz = () => {
-  export function getRandomQuestions(subjectId, count = 10) {
-  const list = questionsData[subjectId] || [];
-  const shuffled = [...list];
-
-  
-  for (let i = shuffled.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
-  }
-
-
-  return shuffled.slice(0, Math.min(count, shuffled.length)).map((q) => {
-    const options = [...q.options];
-    for (let i = options.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [options[i], options[j]] = [options[j], options[i]];
-    }
-    return {
-      ...q,
-      options,
-    };
-  });
-}
+    const randomized = getRandomQuestions(subjectId, 10);
+    setQuestions(randomized);
+    setCurrentIndex(0);
+    setScore(0);
+    setSelectedOption(null);
+    setIsCompleted(false);
+    setIsSubmitted(false);
   };
 
   if (!questions.length) {

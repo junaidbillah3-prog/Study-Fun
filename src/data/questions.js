@@ -690,18 +690,28 @@ export const questionsData = {
   ]
 };
 
-/**
- * Utility to shuffle an array and return a random selection of questions.
- * Uses the Fisher-Yates shuffle algorithm.
- */
+
+//randomize
+
 export function getRandomQuestions(subjectId, count = 10) {
   const list = questionsData[subjectId] || [];
   const shuffled = [...list];
+
 
   for (let i = shuffled.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
     [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
   }
 
-  return shuffled.slice(0, Math.min(count, shuffled.length));
+  return shuffled.slice(0, Math.min(count, shuffled.length)).map((q) => {
+    const options = [...q.options];
+    for (let i = options.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [options[i], options[j]] = [options[j], options[i]];
+    }
+    return {
+      ...q,
+      options,
+    };
+  });
 }
