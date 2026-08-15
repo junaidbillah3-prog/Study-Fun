@@ -88,24 +88,40 @@ export default function Dashboard() {
       <h2 className="text-2xl font-semibold text-gray-200 mb-6">Select a Subject</h2>
       
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
-        {subjects.map((subj) => {
-          const IconComponent = subj.icon;
-          return (
-            <Link
-              key={subj.id}
-              to={`/quiz/${subj.id}`}
-              className={`p-6 rounded-2xl border bg-gray-800/50 backdrop-blur-sm transition-all transform hover:-translate-y-1 flex items-center gap-5 shadow-lg ${subj.color}`}
-            >
-              <div className="p-4 rounded-xl bg-gray-900/80 shadow-inner">
-                <IconComponent className="w-8 h-8" />
-              </div>
-              <div>
-                <h3 className="text-2xl font-bold text-white mb-1">{subj.name}</h3>
-                <p className="text-sm text-gray-400">Practice questions, past papers, and instant scoring.</p>
-              </div>
-            </Link>
-          );
-        })}
+{subjects.map((subj) => {
+  const IconComponent = subj.icon;
+  return (
+    <div
+      key={subj.id}
+      className={`p-6 rounded-2xl border bg-gray-800/50 backdrop-blur-sm transition-all flex flex-col justify-between shadow-lg ${subj.color}`}
+    >
+      <div className="flex items-center gap-5 mb-4">
+        <div className="p-4 rounded-xl bg-gray-900/80 shadow-inner">
+          <IconComponent className="w-8 h-8" />
+        </div>
+        <div>
+          <h3 className="text-2xl font-bold text-white mb-1">{subj.name}</h3>
+          <p className="text-sm text-gray-400">Practice questions, past papers, and instant scoring.</p>
+        </div>
+      </div>
+
+      <div className="grid grid-cols-2 gap-3 mt-2">
+        <Link
+          to={`/quiz/${subj.id}`}
+          className="text-center py-2 px-4 bg-blue-600/80 hover:bg-blue-600 text-white font-bold text-sm rounded-xl transition-all"
+        >
+          Classic Quiz
+        </Link>
+        <Link
+          to={`/meme-mode/${subj.id}`}
+          className="text-center py-2 px-4 bg-purple-600/80 hover:bg-purple-600 text-white font-bold text-sm rounded-xl transition-all flex items-center justify-center gap-1.5"
+        >
+          <Sparkles className="w-4 h-4" /> Meme Mode
+        </Link>
+      </div>
+    </div>
+  );
+})}
       </div>
 
       <AuthModal isOpen={isAuthOpen} onClose={() => setIsAuthOpen(false)} />
