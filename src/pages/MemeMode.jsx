@@ -9,6 +9,119 @@ const SAMPLE_PAIRS = {
     { id: 1, prompt: 'Mitochondria', answer: 'Powerhouse of the cell' },
     { id: 2, prompt: 'Ribosome', answer: 'Protein synthesis factory' },
     { id: 3, prompt: 'Chloroplast', answer: 'Site of photosynthesis' },
+    { id: 1, prompt: 'Bond formed between two amino acids', answer: 'Peptide bond' },
+    { id: 2, prompt: 'Bonds linking base pairs in DNA', answer: 'Hydrogen bonds' },
+    { id: 3, prompt: 'Sugar + phosphate + nitrogenous base', answer: 'Nucleotide' },
+    { id: 4, prompt: 'Molecule with anti-codons', answer: 'tRNA' },
+    { id: 5, prompt: 'Molecule with codons', answer: 'mRNA' },
+    { id: 6, prompt: 'Natural shape of a DNA molecule', answer: 'Double helix' },
+    { id: 7, prompt: 'Nucleic acid constituent of chromosomes', answer: 'DNA' },
+    { id: 8, prompt: 'Assembly of amino acids into sequence', answer: 'Translation' },
+    { id: 9, prompt: 'Cell cycle phase for DNA replication', answer: 'Interphase' },
+    { id: 10, prompt: 'Production of identical DNA copies', answer: 'DNA replication' },
+    { id: 11, prompt: 'Chromosome segment coding for a protein', answer: 'Gene' },
+    { id: 12, prompt: 'Single stranded nucleic acid', answer: 'RNA' },
+    { id: 13, prompt: 'Site of DNA replication & transcription', answer: 'Nucleus' },
+    { id: 14, prompt: 'Site of protein synthesis', answer: 'Ribosome' },
+    { id: 15, prompt: 'DNA strand used to form mRNA', answer: 'Template strand' },
+    { id: 16, prompt: 'Tangled chromosomes in the nucleus', answer: 'Chromatin network' },
+    { id: 17, prompt: 'Base that pairs with adenine in DNA', answer: 'Thymine' },
+    { id: 18, prompt: 'Base that pairs with guanine', answer: 'Cytosine' },
+    { id: 19, prompt: 'Base found in RNA but not in DNA', answer: 'Uracil' },
+    { id: 20, prompt: 'Triplet of bases on tRNA', answer: 'Anticodon' },
+    { id: 21, prompt: 'Triplet of consecutive bases on mRNA', answer: 'Codon' },
+    { id: 22, prompt: 'Message transfer from DNA to mRNA', answer: 'Transcription' },
+    { id: 23, prompt: 'Land feature separating a population', answer: 'Geographical barrier' },
+    { id: 24, prompt: 'Range of different phenotypes exists', answer: 'Continuous variation' },
+    { id: 25, prompt: 'Testable statement to accept/reject', answer: 'Hypothesis' },
+    { id: 26, prompt: 'Based on hypotheses and laws', answer: 'Theory' },
+    { id: 27, prompt: 'Elimination of species from Earth', answer: 'Extinction' },
+    { id: 28, prompt: 'Rapid change after long periods of no change', answer: 'Punctuated equilibrium' },
+    { id: 29, prompt: 'Same species occupying same habitat', answer: 'Population' },
+    { id: 30, prompt: 'Survival due to suited characteristics', answer: 'Natural selection' },
+    { id: 31, prompt: 'Age of fossil via radioactive decay', answer: 'Radiometric dating' },
+    { id: 32, prompt: 'Order organisms appeared on Earth', answer: 'Relative dating' },
+    { id: 33, prompt: 'Remains of past organisms', answer: 'Fossils' },
+    { id: 34, prompt: 'Organisms that interbreed for fertile offspring', answer: 'Species' },
+    { id: 35, prompt: 'Study of organism locations globally', answer: 'Biogeography' },
+    { id: 36, prompt: 'Speciation due to geographical barrier', answer: 'Allopatric speciation' },
+    { id: 37, prompt: 'Similar function, no common origin', answer: 'Analogous structures' },
+    { id: 38, prompt: 'Similar function, with a common origin', answer: 'Homologous structures' },
+    { id: 39, prompt: 'Sudden change to a gene/chromosome', answer: 'Mutation' },
+    { id: 40, prompt: 'The formation of a new species', answer: 'Speciation' },
+    { id: 41, prompt: 'Human intervention in breeding', answer: 'Artificial selection' },
+    { id: 42, prompt: 'Range of life forms on Earth', answer: 'Biodiversity' },
+    { id: 43, prompt: 'Separation of population by a barrier', answer: 'Geographic isolation' },
+    { id: 44, prompt: 'The study of fossils', answer: 'Palaeontology' },
+    { id: 45, prompt: 'Phenotype is strictly present or absent', answer: 'Discontinuous variation' },
+    { id: 46, prompt: 'Testable statement to accept/reject', answer: 'Hypothesis' },
+    { id: 47, prompt: 'Thumb working in opposite direction', answer: 'Opposable thumb' },
+    { id: 48, prompt: 'Arrangement of teeth on a jaw', answer: 'Dentition' },
+    { id: 49, prompt: 'Based on hypotheses, principles, laws', answer: 'Theory' },
+    { id: 50, prompt: 'Diagram of evolutionary relationships', answer: 'Phylogenetic tree' },
+    { id: 51, prompt: 'Fossil with ancestral & descendant traits', answer: 'Transitional fossil' },
+    { id: 52, prompt: 'Genetic material tracing female ancestry', answer: 'Mitochondrial DNA (mtDNA)' },
+    { id: 53, prompt: 'Pointed face from projecting jaws', answer: 'Prognathous' },
+    { id: 54, prompt: 'Modern humans and immediate ancestors', answer: 'Hominins' },
+    { id: 55, prompt: 'Skull opening for the spinal cord', answer: 'Foramen magnum' },
+    { id: 56, prompt: 'Order including humans, apes, lemurs', answer: 'Primates' },
+    { id: 57, prompt: 'Sudden change to a gene/chromosome', answer: 'Mutation' },
+    { id: 58, prompt: 'The act of walking on all four limbs', answer: 'Quadrupedalism' },
+    { id: 59, prompt: 'The act of walking on two feet', answer: 'Bipedalism' },
+    { id: 60, prompt: 'Substance bringing about seed dormancy', answer: 'Abscisic acid (ABA)' },
+    { id: 61, prompt: 'Inhibition of lateral buds by apical buds', answer: 'Apical dominance' },
+    { id: 62, prompt: 'Hormone causing stem and root bending', answer: 'Auxins' },
+    { id: 63, prompt: 'Plant growth response to gravity', answer: 'Gravitropism (Geotropism)' },
+    { id: 64, prompt: 'Substance elongating plant internodes', answer: 'Gibberellins' },
+    { id: 65, prompt: 'Plant growth response to light', answer: 'Phototropism' },
+    { id: 66, prompt: 'Plant bending response to a stimulus', answer: 'Tropism' },
+    { id: 67, prompt: 'Hollow ball of cells from fertilised ovum', answer: 'Blastocyst' },
+    { id: 68, prompt: 'Tube attaching embryo to placenta', answer: 'Umbilical cord' },
+    { id: 69, prompt: 'Another name for pregnancy period', answer: 'Gestation' },
+    { id: 70, prompt: 'Coiled tube outside testis storing sperm', answer: 'Epididymis' },
+    { id: 71, prompt: 'Maternal/embryonic tissue for exchange', answer: 'Placenta' },
+    { id: 72, prompt: 'Brain gland producing FSH and LH', answer: 'Pituitary gland' },
+    { id: 73, prompt: 'Hormone for male secondary characteristics', answer: 'Testosterone' },
+    { id: 74, prompt: 'Hormone that maintains pregnancy', answer: 'Progesterone' },
+    { id: 75, prompt: 'Release of ovum from the ovary', answer: 'Ovulation' },
+    { id: 76, prompt: 'Production of ova by meiosis', answer: 'Oogenesis' },
+    { id: 77, prompt: 'Production of sperm by meiosis', answer: 'Spermatogenesis' },
+    { id: 78, prompt: 'Sperm enzyme cap to penetrate ovum', answer: 'Acrosome' },
+    { id: 79, prompt: 'Tearing away of uterine lining with blood loss', answer: 'Menstruation' },
+    { id: 80, prompt: '28-day female reproductive cycle', answer: 'Menstrual cycle' },
+    { id: 81, prompt: 'Vessel carrying waste from foetus to placenta', answer: 'Umbilical artery' },
+    { id: 82, prompt: 'Vessel carrying oxygenated blood to foetus', answer: 'Umbilical vein' },
+    { id: 83, prompt: 'Cell division making zygote multicellular', answer: 'Mitosis' },
+    { id: 84, prompt: 'The formation of gametes by meiosis', answer: 'Gametogenesis' },
+    { id: 85, prompt: 'Pituitary hormone controlling follicle growth', answer: 'Follicle-Stimulating Hormone (FSH)' },
+    { id: 86, prompt: 'Hormone converting follicle to corpus luteum', answer: 'Luteinizing Hormone (LH)' },
+    { id: 87, prompt: 'Hormone starting uterine lining preparation', answer: 'Oestrogen' },
+    { id: 88, prompt: 'Uterine lining richly supplied with blood', answer: 'Endometrium' },
+    { id: 89, prompt: 'Cross involving a single characteristic', answer: 'Monohybrid cross' },
+    { id: 90, prompt: 'Cross involving two characteristics', answer: 'Dihybrid cross' },
+    { id: 91, prompt: 'Diagram tracing family trait transmission', answer: 'Pedigree diagram' },
+    { id: 92, prompt: 'Allele expressed only when homozygous', answer: 'Recessive allele' },
+    { id: 93, prompt: 'Allele expressed in homo or heterozygous state', answer: 'Dominant allele' },
+    { id: 94, prompt: 'Alternative forms of a gene at a locus', answer: 'Alleles' },
+    { id: 95, prompt: 'Traits controlled by sex chromosome genes', answer: 'Sex-linked characteristics' },
+    { id: 96, prompt: 'Cross with equally dominant alleles (both shown)', answer: 'Co-dominance' },
+    { id: 97, prompt: 'Cross with neither dominant allele (blend)', answer: 'Incomplete dominance' },
+    { id: 98, prompt: 'Cross controlled by dominant/recessive alleles', answer: 'Complete dominance' },
+    { id: 99, prompt: 'Point mutation causing banana-shaped cells', answer: 'Sickle-cell anaemia' },
+    { id: 100, prompt: 'Disorder from extra chromosome 21', answer: 'Down syndrome' },
+    { id: 101, prompt: 'Genetic disorder with zero melanin pigment', answer: 'Albinism' },
+    { id: 102, prompt: 'Individual with two identical alleles', answer: 'Homozygous' },
+    { id: 103, prompt: 'Individual with two different alleles', answer: 'Heterozygous' },
+    { id: 104, prompt: 'Manipulation of genotype for traits', answer: 'Genetic engineering' },
+    { id: 105, prompt: 'More than two alleles for a single trait', answer: 'Multiple alleles' },
+    { id: 106, prompt: 'Sex-linked disorder lacking clotting factors', answer: 'Haemophilia' },
+    { id: 107, prompt: 'Sudden change in gene structure', answer: 'Mutation' },
+    { id: 108, prompt: 'Tangled network of chromosomes in nucleus', answer: 'Chromatin network' },
+    { id: 109, prompt: 'The allele makeup of an organism', answer: 'Genotype' },
+    { id: 110, prompt: 'The external appearance of an organism', answer: 'Phenotype' },
+    { id: 111, prompt: 'Alleles sorting independently into gametes', answer: 'Principle of Independent Assortment' },
+    { id: 112, prompt: 'Production of genetically identical offspring', answer: 'Cloning' },
+    { id: 113, prompt: 'Undifferentiated cells forming other cell types', answer: 'Stem cells' }
   ],
   'physical-sciences': [
     { id: 1, prompt: 'Newton 1st Law', answer: 'Inertia / Law of Rest' },
@@ -32,29 +145,35 @@ export default function MemeMode() {
 
   const [prompts, setPrompts] = useState([]);
   const [answers, setAnswers] = useState([]);
-  const [connections, setConnections] = useState({}); // { promptId: answerId }
+  const [connections, setConnections] = useState({}); 
   const [draggedPromptId, setDraggedPromptId] = useState(null);
   
-  // Anti-cheat & Completion States
+
   const [isCompleted, setIsCompleted] = useState(false);
-  const [pointsAwarded, setPointsAwarded] = useState(false); // Prevents repeat point farming
+  const [pointsAwarded, setPointsAwarded] = useState(false); 
   const [leaderboardScore, setLeaderboardScore] = useState(0);
   
-  // Active Meme Overlay State
+
   const [activeMeme, setActiveMeme] = useState(null);
   
   const videoRef = useRef(null);
   const audioRef = useRef(null);
 
-  const resetGame = () => {
+const resetGame = () => {
     setConnections({});
     setIsCompleted(false);
-    setPointsAwarded(false); // Reset award lock for new shuffled round
+    setPointsAwarded(false);
+    setSelectedPromptId(null);
     setActiveMeme(null);
-    setPrompts([...pairs].sort(() => Math.random() - 0.5));
-    setAnswers([...pairs].sort(() => Math.random() - 0.5));
-  };
 
+   
+    const shuffledPool = [...pairs].sort(() => Math.random() - 0.5);
+    const roundPairs = shuffledPool.slice(0, 5); 
+
+  
+    setPrompts([...roundPairs].sort(() => Math.random() - 0.5));
+    setAnswers([...roundPairs].sort(() => Math.random() - 0.5));
+  };
   useEffect(() => {
     resetGame();
     const savedScore = parseInt(localStorage.getItem('leaderboard_score') || '0', 10);
@@ -117,11 +236,11 @@ export default function MemeMode() {
       ([pId, aId]) => Number(pId) === Number(aId)
     ).length;
 
-    // Trigger mode end dynamically when ALL available tiles are matched
-    if (correctCount === pairs.length) {
+  
+    if (correctCount === prompts.length) {
       setIsCompleted(true);
 
-      // ANTI-CHEAT CHECK: Award +3 points ONLY ONCE per active round session
+   
       if (!pointsAwarded) {
         setPointsAwarded(true);
         const newScore = leaderboardScore + 3;
@@ -175,7 +294,7 @@ export default function MemeMode() {
           Drag a question tile and scroll or slide on the correct answer tile!
         </p>
         <div className="inline-block bg-gray-800/80 px-4 py-1.5 rounded-full border border-gray-700 text-sm text-gray-300 font-medium">
-          Matched: <span className="text-purple-400 font-bold">{correctCount}</span> / {pairs.length}
+          Matched: <span className="text-purple-400 font-bold">{correctCount}</span> / {prompts.length}
         </div>
       </div>
 
@@ -186,7 +305,7 @@ export default function MemeMode() {
             <Trophy className="w-7 h-7 text-yellow-400" /> Mode Complete! 🎉
           </h2>
           <p className="text-gray-200 text-sm mb-4">
-            You matched all <span className="font-bold">{pairs.length}</span> tiles! {pointsAwarded ? <span className="text-yellow-300 font-bold">+3 Points</span> : <span className="text-gray-400 font-semibold">(Already Claimed)</span>} added to your leaderboard score.
+            You matched all <span className="font-bold">{prompts.length}</span> tiles! {pointsAwarded ? <span className="text-yellow-300 font-bold">+3 Points</span> : <span className="text-gray-400 font-semibold">(Already Claimed)</span>} added to your leaderboard score.
           </p>
           <button
             onClick={resetGame}
