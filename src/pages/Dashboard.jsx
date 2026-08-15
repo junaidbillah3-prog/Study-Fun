@@ -1,18 +1,8 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { BookOpen, Atom, Globe, Calculator, Award, User, LogOut } from 'lucide-react';
+import { BookOpen, Atom, Globe, Calculator, Award, User, LogOut, Trophy } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 import AuthModal from '../components/AuthModal';
-import { Trophy } from 'lucide-react';
-
-
-<Link
-  to="/leaderboard"
-  className="flex items-center gap-2 px-4 py-2 bg-yellow-500/10 border border-yellow-500/30 text-yellow-400 font-bold rounded-xl hover:bg-yellow-500/20 transition-all"
->
-  <Trophy className="w-5 h-5" />
-  Leaderboard
-</Link>
 
 export default function Dashboard() {
   const [user, setUser] = useState(null);
@@ -57,9 +47,18 @@ export default function Dashboard() {
           <span className="font-bold text-white">Study-Fun Matric</span>
         </div>
 
-        <div>
+        <div className="flex items-center gap-3">
+          {/* Leaderboard Button */}
+          <Link
+            to="/leaderboard"
+            className="flex items-center gap-2 px-3.5 py-1.5 bg-yellow-500/10 border border-yellow-500/30 text-yellow-400 font-bold text-sm rounded-xl hover:bg-yellow-500/20 transition-all"
+          >
+            <Trophy className="w-4 h-4" />
+            Leaderboard
+          </Link>
+
           {user ? (
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-3">
               <span className="text-sm text-gray-300 flex items-center gap-2 bg-gray-900/60 px-3 py-1.5 rounded-xl border border-gray-700">
                 <User className="w-4 h-4 text-blue-400" /> {user.email}
               </span>
