@@ -172,7 +172,7 @@ export default function MemeMode() {
       {/* Dynamic Progress Indicator */}
       <div className="text-center mb-8">
         <p className="text-gray-400 mb-2">
-          Drag a question tile on the left and drop it onto its matching answer on the right!
+          Drag a question tile and scroll or slide on the correct answer tile!
         </p>
         <div className="inline-block bg-gray-800/80 px-4 py-1.5 rounded-full border border-gray-700 text-sm text-gray-300 font-medium">
           Matched: <span className="text-purple-400 font-bold">{correctCount}</span> / {pairs.length}
