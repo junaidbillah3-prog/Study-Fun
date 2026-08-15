@@ -363,7 +363,7 @@ export default function MemeMode() {
       {/* Dynamic Progress Indicator */}
       <div className="text-center mb-8">
         <p className="text-gray-400 mb-2">
-          Drag tiles (Desktop) or <span className="text-purple-400 font-semibold">tap a question then tap an answer</span> (Mobile)!
+          Drag tiles (Desktop) or <span className="text-purple-400 font-semibold">tap a question then tap an answer, CLICK DISCONNECT TO RETRY</span> (Mobile)!
         </p>
         <div className="inline-block bg-gray-800/80 px-4 py-1.5 rounded-full border border-gray-700 text-sm text-gray-300 font-medium">
           Matched: <span className="text-purple-400 font-bold">{correctCount}</span> / {prompts.length}
