@@ -3,6 +3,16 @@ import { Link } from 'react-router-dom';
 import { BookOpen, Atom, Globe, Calculator, Award, User, LogOut } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 import AuthModal from '../components/AuthModal';
+import { Link } from 'react-router-dom';
+import { Trophy } from 'lucide-react';
+
+<Link
+  to="/leaderboard"
+  className="flex items-center gap-2 px-4 py-2 bg-yellow-500/10 border border-yellow-500/30 text-yellow-400 font-bold rounded-xl hover:bg-yellow-500/20 transition-all"
+>
+  <Trophy className="w-5 h-5" />
+  Leaderboard
+</Link>
 
 export default function Dashboard() {
   const [user, setUser] = useState(null);
