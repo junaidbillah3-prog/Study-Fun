@@ -322,32 +322,34 @@ const resetGame = () => {
         {/* Prompts Column */}
         <div className="space-y-4"> 
           <h3 className="text-lg font-bold text-gray-300 mb-2">Questions</h3>
-          {prompts.map((p) => {
-            const isConnected = connections[p.id] !== undefined;
-            return (
-              <div
-                key={p.id}
-                draggable
-                onDragStart={(e) => handleDragStart(e, p.id)}
-                className={`p-2.5 md:p-4 rounded-xl border font-bold text-xs md:text-base cursor-grab active:cursor-grabbing transition-all flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 ${
-                  isConnected
-                  ? 'bg-purple-900/40 border-purple-500/50 text-purple-200'
-                  : 'bg-gray-800 border-gray-700 hover:border-gray-500 text-white'
-               }`}
->
-  <span>{p.prompt}</span>
-  {isConnected && (
-    <button
-      onClick={() => handleDisconnect(p.id)}
-      className="text-[10px] md:text-xs bg-red-500/20 text-red-400 border border-red-500/30 px-1.5 py-0.5 md:px-2 md:py-1 rounded hover:bg-red-500/40"
+{prompts.map((p) => {
+  const isConnected = connections[p.id] !== undefined;
+  return (
+    <div
+      key={p.id}
+      draggable
+      onDragStart={(e) => handleDragStart(e, p.id)}
+      className={`p-2.5 md:p-4 rounded-xl border font-bold text-xs md:text-base cursor-grab active:cursor-grabbing transition-all touch-none flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 ${
+        isConnected
+          ? 'bg-purple-900/40 border-purple-500/50 text-purple-200'
+          : 'bg-gray-800 border-gray-700 hover:border-gray-500 text-white'
+      }`}
     >
-      Disconnect
-    </button>
-  )}
-</div>
+      <span>{p.prompt}</span>
+      {isConnected && (
+        <button
+          onClick={() => handleDisconnect(p.id)}
+          className="text-[10px] md:text-xs bg-red-500/20 text-red-400 border border-red-500/30 px-1.5 py-0.5 md:px-2 md:py-1 rounded hover:bg-red-500/40"
+        >
+          Disconnect
+        </button>
+      )}
+    </div>
+  );
+})}
 
-            );
-          })}
+    
+          
         </div>
 
         {/* Answers Column (Drop Zones) */}
