@@ -148,33 +148,30 @@ export default function MemeMode() {
   const [connections, setConnections] = useState({}); 
   const [draggedPromptId, setDraggedPromptId] = useState(null);
   const [selectedPromptId, setSelectedPromptId] = useState(null);
-  
 
   const [isCompleted, setIsCompleted] = useState(false);
   const [pointsAwarded, setPointsAwarded] = useState(false); 
   const [leaderboardScore, setLeaderboardScore] = useState(0);
-  
 
   const [activeMeme, setActiveMeme] = useState(null);
   
   const videoRef = useRef(null);
   const audioRef = useRef(null);
 
-const resetGame = () => {
+  const resetGame = () => {
     setConnections({});
     setIsCompleted(false);
     setPointsAwarded(false);
     setSelectedPromptId(null);
     setActiveMeme(null);
 
-   
     const shuffledPool = [...pairs].sort(() => Math.random() - 0.5);
     const roundPairs = shuffledPool.slice(0, 5); 
 
-  
     setPrompts([...roundPairs].sort(() => Math.random() - 0.5));
     setAnswers([...roundPairs].sort(() => Math.random() - 0.5));
   };
+
   useEffect(() => {
     resetGame();
     const savedScore = parseInt(localStorage.getItem('leaderboard_score') || '0', 10);
@@ -211,37 +208,26 @@ const resetGame = () => {
     setActiveMeme(meme);
   };
 
-  // Drag and Drop Handlers
-  const handleDragStart = (e, promptId) => {
-    setDraggedPromptId(promptId);
-    e.dataTransfer.setData('text/plain', promptId.toString());
-  };
-
-  const handleDrop = (e, answerId) => {
-    e.preventDefault();
-    if (!draggedPromptId) return;
-
-    const isCorrect = Number(draggedPromptId) === Number(answerId);
+  // Core Matching Logic for both Drag-and-Drop and Tap-to-Match
+  const handleMatch = (promptId, answerId) => {
+    const isCorrect = Number(promptId) === Number(answerId);
 
     const updatedConnections = {
       ...connections,
-      [draggedPromptId]: answerId,
+      [promptId]: answerId,
     };
 
     setConnections(updatedConnections);
     triggerMeme(isCorrect);
+    setSelectedPromptId(null);
     setDraggedPromptId(null);
 
-    // Calculate dynamic correct matches count based on current set size
     const correctCount = Object.entries(updatedConnections).filter(
       ([pId, aId]) => Number(pId) === Number(aId)
     ).length;
 
-  
     if (correctCount === prompts.length) {
       setIsCompleted(true);
-
-   
       if (!pointsAwarded) {
         setPointsAwarded(true);
         const newScore = leaderboardScore + 3;
@@ -251,10 +237,38 @@ const resetGame = () => {
     }
   };
 
+  // Drag and Drop Handlers
+  const handleDragStart = (e, promptId) => {
+    setDraggedPromptId(promptId);
+    e.dataTransfer.setData('text/plain', promptId.toString());
+  };
+
+  const handleDrop = (e, answerId) => {
+    e.preventDefault();
+    if (!draggedPromptId) return;
+    handleMatch(draggedPromptId, answerId);
+  };
+
+  const handleDragOver = (e) => {
+    e.preventDefault();
+  };
+
+  // Tap-to-Match Handlers for Mobile
+  const handlePromptClick = (pId) => {
+    if (connections[pId] !== undefined) return;
+    setSelectedPromptId(selectedPromptId === pId ? null : pId);
+  };
+
+  const handleAnswerClick = (aId) => {
+    if (selectedPromptId !== null) {
+      handleMatch(selectedPromptId, aId);
+    }
+  };
+
   const handleDisconnect = (promptId) => {
     stopCurrentMedia();
     setActiveMeme(null);
-    setIsCompleted(false); // Hides completion banner if they un-match
+    setIsCompleted(false);
 
     setConnections((prev) => {
       const copy = { ...prev };
@@ -263,11 +277,6 @@ const resetGame = () => {
     });
   };
 
-  const handleDragOver = (e) => {
-    e.preventDefault();
-  };
-
-  // Dynamic match progress count
   const correctCount = Object.entries(connections).filter(
     ([pId, aId]) => Number(pId) === Number(aId)
   ).length;
@@ -292,7 +301,7 @@ const resetGame = () => {
       {/* Dynamic Progress Indicator */}
       <div className="text-center mb-8">
         <p className="text-gray-400 mb-2">
-          Drag a question tile and scroll or slide on the correct answer tile!
+          Drag tiles (Desktop) or <span className="text-purple-400 font-semibold">tap a question then tap an answer</span> (Mobile)!
         </p>
         <div className="inline-block bg-gray-800/80 px-4 py-1.5 rounded-full border border-gray-700 text-sm text-gray-300 font-medium">
           Matched: <span className="text-purple-400 font-bold">{correctCount}</span> / {prompts.length}
@@ -317,39 +326,43 @@ const resetGame = () => {
         </div>
       )}
 
-      {/* Drag & Drop Area */}
+      {/* Drag & Drop / Tap Area */}
       <div className="grid grid-cols-2 gap-3 md:gap-8 mb-12">
         {/* Prompts Column */}
         <div className="space-y-4"> 
           <h3 className="text-lg font-bold text-gray-300 mb-2">Questions</h3>
-{prompts.map((p) => {
-  const isConnected = connections[p.id] !== undefined;
-  return (
-    <div
-      key={p.id}
-      draggable
-      onDragStart={(e) => handleDragStart(e, p.id)}
-      className={`p-2.5 md:p-4 rounded-xl border font-bold text-xs md:text-base cursor-grab active:cursor-grabbing transition-all touch-none flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 ${
-        isConnected
-          ? 'bg-purple-900/40 border-purple-500/50 text-purple-200'
-          : 'bg-gray-800 border-gray-700 hover:border-gray-500 text-white'
-      }`}
-    >
-      <span>{p.prompt}</span>
-      {isConnected && (
-        <button
-          onClick={() => handleDisconnect(p.id)}
-          className="text-[10px] md:text-xs bg-red-500/20 text-red-400 border border-red-500/30 px-1.5 py-0.5 md:px-2 md:py-1 rounded hover:bg-red-500/40"
-        >
-          Disconnect
-        </button>
-      )}
-    </div>
-  );
-})}
-
-    
-          
+          {prompts.map((p) => {
+            const isConnected = connections[p.id] !== undefined;
+            const isSelected = selectedPromptId === p.id;
+            return (
+              <div
+                key={p.id}
+                draggable
+                onDragStart={(e) => handleDragStart(e, p.id)}
+                onClick={() => handlePromptClick(p.id)}
+                className={`p-2.5 md:p-4 rounded-xl border font-bold text-xs md:text-base cursor-pointer active:cursor-grabbing transition-all touch-none flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 ${
+                  isConnected
+                    ? 'bg-purple-900/40 border-purple-500/50 text-purple-200'
+                    : isSelected
+                    ? 'bg-purple-800/80 border-purple-400 text-white ring-2 ring-purple-400 shadow-lg scale-[1.02]'
+                    : 'bg-gray-800 border-gray-700 hover:border-gray-500 text-white'
+                }`}
+              >
+                <span>{p.prompt}</span>
+                {isConnected && (
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleDisconnect(p.id);
+                    }}
+                    className="text-[10px] md:text-xs bg-red-500/20 text-red-400 border border-red-500/30 px-1.5 py-0.5 md:px-2 md:py-1 rounded hover:bg-red-500/40"
+                  >
+                    Disconnect
+                  </button>
+                )}
+              </div>
+            );
+          })}
         </div>
 
         {/* Answers Column (Drop Zones) */}
@@ -360,26 +373,29 @@ const resetGame = () => {
               (pId) => connections[pId] === a.id
             );
             return (
-             <div
-              key={a.id}
-                 onDragOver={handleDragOver}
-                 onDrop={(e) => handleDrop(e, a.id)}
-                 className={`p-2.5 md:p-4 rounded-xl border font-medium text-xs md:text-base transition-all min-h-[60px] flex items-center ${
-                 connectedPromptId
-                 ? Number(connectedPromptId) === a.id
-                   ? 'bg-emerald-900/30 border-emerald-500 text-emerald-300'
-                   : 'bg-red-900/30 border-red-500 text-red-300'
+              <div
+                key={a.id}
+                onDragOver={handleDragOver}
+                onDrop={(e) => handleDrop(e, a.id)}
+                onClick={() => handleAnswerClick(a.id)}
+                className={`p-2.5 md:p-4 rounded-xl border font-medium text-xs md:text-base transition-all min-h-[60px] flex items-center cursor-pointer ${
+                  connectedPromptId
+                    ? Number(connectedPromptId) === a.id
+                      ? 'bg-emerald-900/30 border-emerald-500 text-emerald-300'
+                      : 'bg-red-900/30 border-red-500 text-red-300'
+                    : selectedPromptId !== null
+                    ? 'bg-gray-800/80 border-purple-500/70 hover:border-purple-400 animate-pulse'
                     : 'bg-gray-800/60 border-dashed border-gray-600 hover:border-purple-400'
-  }`}
->
-  <span>{a.answer}</span>
-</div>
+                }`}
+              >
+                <span>{a.answer}</span>
+              </div>
             );
           })}
         </div>
       </div>
 
-{/* Floating Meme Popup */}
+      {/* Floating Meme Popup */}
       {activeMeme && (
         <div className="fixed bottom-4 right-4 md:bottom-6 md:right-6 z-50 bg-gray-900 border-2 border-purple-500 rounded-2xl p-1.5 md:p-2 shadow-2xl max-w-[150px] sm:max-w-[200px] md:max-w-[240px]">
           {activeMeme.type === 'video' ? (
