@@ -4,6 +4,10 @@ import { useParams, useNavigate, Link } from 'react-router-dom';
 import { getRandomQuestions } from '../data/questions';
 import { ArrowLeft, RotateCcw, CheckCircle, XCircle } from 'lucide-react';
 
+// Import Meme assets helper and modal component
+import { getRandomMeme } from '../data/memeAssets';
+import MemeModal from '../components/MemeModal';
+
 export default function Quiz() {
   const { subjectId } = useParams();
   const navigate = useNavigate();
@@ -14,7 +18,9 @@ export default function Quiz() {
   const [score, setScore] = useState(0);
   const [isCompleted, setIsCompleted] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
-
+  
+  // State for active meme modal
+  const [activeMeme, setActiveMeme] = useState(null);
 
   useEffect(() => {
     loadNewQuiz();
@@ -28,6 +34,7 @@ export default function Quiz() {
     setSelectedOption(null);
     setIsCompleted(false);
     setIsSubmitted(false);
+    setActiveMeme(null);
   };
 
   if (!questions.length) {
@@ -48,62 +55,66 @@ export default function Quiz() {
   const handleSubmitAnswer = () => {
     if (!selectedOption || isSubmitted) return;
     setIsSubmitted(true);
-    if (selectedOption === currentQuestion.answer) {
+    
+    const isCorrect = selectedOption === currentQuestion.answer;
+    if (isCorrect) {
       setScore((prev) => prev + 1);
     }
+
+    // Pick random correct or incorrect meme reaction and open modal
+    const meme = getRandomMeme(isCorrect);
+    setActiveMeme(meme);
   };
 
-const handleNextQuestion = async () => {
-  if (currentIndex + 1 < questions.length) {
-    setCurrentIndex((prev) => prev + 1);
-    setSelectedOption(null);
-    setIsSubmitted(false);
-  } else {
-    setIsCompleted(true);
+  const handleNextQuestion = async () => {
+    if (currentIndex + 1 < questions.length) {
+      setCurrentIndex((prev) => prev + 1);
+      setSelectedOption(null);
+      setIsSubmitted(false);
+      setActiveMeme(null);
+    } else {
+      setIsCompleted(true);
 
-    try {
-      const { data: { user } } = await supabase.auth.getUser();
-      const displayName = user
-        ? (user.user_metadata?.full_name || user.email.split('@')[0])
-        : 'Guest Scholar';
+      try {
+        const { data: { user } } = await supabase.auth.getUser();
+        const displayName = user
+          ? (user.user_metadata?.full_name || user.email.split('@')[0])
+          : 'Guest Scholar';
 
-      
-      const queryField = user ? 'user_id' : 'username';
-      const queryValue = user ? user.id : displayName;
+        const queryField = user ? 'user_id' : 'username';
+        const queryValue = user ? user.id : displayName;
 
-      const { data: existingEntry } = await supabase
-        .from('leaderboard')
-        .select('*')
-        .eq(queryField, queryValue)
-        .maybeSingle();
-
-      if (existingEntry) {
-        
-        await supabase
+        const { data: existingEntry } = await supabase
           .from('leaderboard')
-          .update({
-            points: existingEntry.points + score,
-            username: displayName,
-            updated_at: new Date()
-          })
-          .eq('id', existingEntry.id);
-      } else {
-        
-        await supabase
-          .from('leaderboard')
-          .insert([
-            {
-              user_id: user ? user.id : null,
+          .select('*')
+          .eq(queryField, queryValue)
+          .maybeSingle();
+
+        if (existingEntry) {
+          await supabase
+            .from('leaderboard')
+            .update({
+              points: existingEntry.points + score,
               username: displayName,
-              points: score
-            }
-          ]);
+              updated_at: new Date()
+            })
+            .eq('id', existingEntry.id);
+        } else {
+          await supabase
+            .from('leaderboard')
+            .insert([
+              {
+                user_id: user ? user.id : null,
+                username: displayName,
+                points: score
+              }
+            ]);
+        }
+      } catch (err) {
+        console.error('Error updating cumulative score:', err);
       }
-    } catch (err) {
-      console.error('Error updating cumulative score:', err);
     }
-  }
-};
+  };
 
   if (isCompleted) {
     return (
@@ -216,6 +227,12 @@ const handleNextQuestion = async () => {
           </button>
         )}
       </div>
+
+      {/* Meme Modal */}
+      <MemeModal
+        activeMeme={activeMeme}
+        onClose={() => setActiveMeme(null)}
+      />
     </div>
   );
 }
