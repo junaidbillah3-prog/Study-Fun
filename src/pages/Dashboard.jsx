@@ -73,7 +73,7 @@ export default function Dashboard() {
 
       <div className="text-center mb-10">
         <h1 className="text-5xl font-extrabold text-blue-400 mb-3 tracking-tight">Study-Fun</h1>
-        <p className="text-lg text-gray-400">South African Matric Revision Platform</p>
+        <p className="text-lg text-gray-400">South African Matric Revision Platform by Junaid!</p>
       </div>
 
       <h2 className="text-2xl font-semibold text-gray-200 mb-6">Select a Subject</h2>
