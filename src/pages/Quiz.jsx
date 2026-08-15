@@ -4,10 +4,6 @@ import { useParams, useNavigate, Link } from 'react-router-dom';
 import { getRandomQuestions } from '../data/questions';
 import { ArrowLeft, RotateCcw, CheckCircle, XCircle } from 'lucide-react';
 
-// Import Meme assets helper and modal component
-import { getRandomMeme } from '../data/memeAssets';
-import MemeModal from '../components/MemeModal';
-
 export default function Quiz() {
   const { subjectId } = useParams();
   const navigate = useNavigate();
@@ -18,9 +14,6 @@ export default function Quiz() {
   const [score, setScore] = useState(0);
   const [isCompleted, setIsCompleted] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
-  
-  // State for active meme modal
-  const [activeMeme, setActiveMeme] = useState(null);
 
   useEffect(() => {
     loadNewQuiz();
@@ -34,7 +27,6 @@ export default function Quiz() {
     setSelectedOption(null);
     setIsCompleted(false);
     setIsSubmitted(false);
-    setActiveMeme(null);
   };
 
   if (!questions.length) {
@@ -60,10 +52,7 @@ export default function Quiz() {
     if (isCorrect) {
       setScore((prev) => prev + 1);
     }
-
-    // Pick random correct or incorrect meme reaction and open modal
-    const meme = getRandomMeme(isCorrect);
-    setActiveMeme(meme);
+    // Clean Classic Mode: No meme triggers here!
   };
 
   const handleNextQuestion = async () => {
@@ -71,7 +60,6 @@ export default function Quiz() {
       setCurrentIndex((prev) => prev + 1);
       setSelectedOption(null);
       setIsSubmitted(false);
-      setActiveMeme(null);
     } else {
       setIsCompleted(true);
 
@@ -227,12 +215,6 @@ export default function Quiz() {
           </button>
         )}
       </div>
-
-      {/* Meme Modal */}
-      <MemeModal
-        activeMeme={activeMeme}
-        onClose={() => setActiveMeme(null)}
-      />
     </div>
   );
 }
