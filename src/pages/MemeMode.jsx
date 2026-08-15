@@ -377,9 +377,9 @@ const resetGame = () => {
         </div>
       </div>
 
-      {/* Floating Meme Popup */}
+{/* Floating Meme Popup */}
       {activeMeme && (
-        <div className="fixed bottom-6 right-6 z-50 bg-gray-900 border-2 border-purple-500 rounded-2xl p-2 shadow-2xl max-w-[240px]">
+        <div className="fixed bottom-4 right-4 md:bottom-6 md:right-6 z-50 bg-gray-900 border-2 border-purple-500 rounded-2xl p-1.5 md:p-2 shadow-2xl max-w-[150px] sm:max-w-[200px] md:max-w-[240px]">
           {activeMeme.type === 'video' ? (
             <video
               ref={videoRef}
