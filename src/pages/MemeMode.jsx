@@ -318,9 +318,9 @@ const resetGame = () => {
       )}
 
       {/* Drag & Drop Area */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+      <div className="grid grid-cols-2 gap-3 md:gap-8 mb-12">
         {/* Prompts Column */}
-        <div className="space-y-4">
+        <div className="space-y-4"> 
           <h3 className="text-lg font-bold text-gray-300 mb-2">Questions</h3>
           {prompts.map((p) => {
             const isConnected = connections[p.id] !== undefined;
@@ -329,22 +329,23 @@ const resetGame = () => {
                 key={p.id}
                 draggable
                 onDragStart={(e) => handleDragStart(e, p.id)}
-                className={`p-4 rounded-xl border font-bold cursor-grab active:cursor-grabbing transition-all flex justify-between items-center ${
+                className={`p-2.5 md:p-4 rounded-xl border font-bold text-xs md:text-base cursor-grab active:cursor-grabbing transition-all flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 ${
                   isConnected
-                    ? 'bg-purple-900/40 border-purple-500/50 text-purple-200'
-                    : 'bg-gray-800 border-gray-700 hover:border-gray-500 text-white'
-                }`}
-              >
-                <span>{p.prompt}</span>
-                {isConnected && (
-                  <button
-                    onClick={() => handleDisconnect(p.id)}
-                    className="text-xs bg-red-500/20 text-red-400 border border-red-500/30 px-2 py-1 rounded hover:bg-red-500/40"
-                  >
-                    Disconnect
-                  </button>
-                )}
-              </div>
+                  ? 'bg-purple-900/40 border-purple-500/50 text-purple-200'
+                  : 'bg-gray-800 border-gray-700 hover:border-gray-500 text-white'
+               }`}
+>
+  <span>{p.prompt}</span>
+  {isConnected && (
+    <button
+      onClick={() => handleDisconnect(p.id)}
+      className="text-[10px] md:text-xs bg-red-500/20 text-red-400 border border-red-500/30 px-1.5 py-0.5 md:px-2 md:py-1 rounded hover:bg-red-500/40"
+    >
+      Disconnect
+    </button>
+  )}
+</div>
+
             );
           })}
         </div>
@@ -357,20 +358,20 @@ const resetGame = () => {
               (pId) => connections[pId] === a.id
             );
             return (
-              <div
-                key={a.id}
-                onDragOver={handleDragOver}
-                onDrop={(e) => handleDrop(e, a.id)}
-                className={`p-4 rounded-xl border font-medium transition-all min-h-[60px] flex items-center ${
-                  connectedPromptId
-                    ? Number(connectedPromptId) === a.id
-                      ? 'bg-emerald-900/30 border-emerald-500 text-emerald-300'
-                      : 'bg-red-900/30 border-red-500 text-red-300'
+             <div
+              key={a.id}
+                 onDragOver={handleDragOver}
+                 onDrop={(e) => handleDrop(e, a.id)}
+                 className={`p-2.5 md:p-4 rounded-xl border font-medium text-xs md:text-base transition-all min-h-[60px] flex items-center ${
+                 connectedPromptId
+                 ? Number(connectedPromptId) === a.id
+                   ? 'bg-emerald-900/30 border-emerald-500 text-emerald-300'
+                   : 'bg-red-900/30 border-red-500 text-red-300'
                     : 'bg-gray-800/60 border-dashed border-gray-600 hover:border-purple-400'
-                }`}
-              >
-                <span>{a.answer}</span>
-              </div>
+  }`}
+>
+  <span>{a.answer}</span>
+</div>
             );
           })}
         </div>
