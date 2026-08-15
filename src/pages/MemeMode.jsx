@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { ArrowLeft, Sparkles } from 'lucide-react';
+import { ArrowLeft, Sparkles, Trophy, RotateCcw } from 'lucide-react';
 import { getRandomMeme } from '../data/memeAssets';
 
 // Sample meme matching pairs per subject
@@ -35,16 +35,30 @@ export default function MemeMode() {
   const [connections, setConnections] = useState({}); // { promptId: answerId }
   const [draggedPromptId, setDraggedPromptId] = useState(null);
   
+  // Anti-cheat & Completion States
+  const [isCompleted, setIsCompleted] = useState(false);
+  const [pointsAwarded, setPointsAwarded] = useState(false); // Prevents repeat point farming
+  const [leaderboardScore, setLeaderboardScore] = useState(0);
+  
   // Active Meme Overlay State
   const [activeMeme, setActiveMeme] = useState(null);
   
   const videoRef = useRef(null);
   const audioRef = useRef(null);
 
-  useEffect(() => {
-    // Shuffle prompts and answers independently
+  const resetGame = () => {
+    setConnections({});
+    setIsCompleted(false);
+    setPointsAwarded(false); // Reset award lock for new shuffled round
+    setActiveMeme(null);
     setPrompts([...pairs].sort(() => Math.random() - 0.5));
     setAnswers([...pairs].sort(() => Math.random() - 0.5));
+  };
+
+  useEffect(() => {
+    resetGame();
+    const savedScore = parseInt(localStorage.getItem('leaderboard_score') || '0', 10);
+    setLeaderboardScore(savedScore);
   }, [subjectId]);
 
   // Programmatically trigger media playback when a meme is selected
@@ -87,20 +101,40 @@ export default function MemeMode() {
     e.preventDefault();
     if (!draggedPromptId) return;
 
-    const isCorrect = draggedPromptId === answerId;
+    const isCorrect = Number(draggedPromptId) === Number(answerId);
 
-    setConnections((prev) => ({
-      ...prev,
+    const updatedConnections = {
+      ...connections,
       [draggedPromptId]: answerId,
-    }));
+    };
 
+    setConnections(updatedConnections);
     triggerMeme(isCorrect);
     setDraggedPromptId(null);
+
+    // Calculate dynamic correct matches count based on current set size
+    const correctCount = Object.entries(updatedConnections).filter(
+      ([pId, aId]) => Number(pId) === Number(aId)
+    ).length;
+
+    // Trigger mode end dynamically when ALL available tiles are matched
+    if (correctCount === pairs.length) {
+      setIsCompleted(true);
+
+      // ANTI-CHEAT CHECK: Award +3 points ONLY ONCE per active round session
+      if (!pointsAwarded) {
+        setPointsAwarded(true);
+        const newScore = leaderboardScore + 3;
+        setLeaderboardScore(newScore);
+        localStorage.setItem('leaderboard_score', newScore.toString());
+      }
+    }
   };
 
   const handleDisconnect = (promptId) => {
     stopCurrentMedia();
     setActiveMeme(null);
+    setIsCompleted(false); // Hides completion banner if they un-match
 
     setConnections((prev) => {
       const copy = { ...prev };
@@ -113,6 +147,11 @@ export default function MemeMode() {
     e.preventDefault();
   };
 
+  // Dynamic match progress count
+  const correctCount = Object.entries(connections).filter(
+    ([pId, aId]) => Number(pId) === Number(aId)
+  ).length;
+
   return (
     <div className="min-h-screen bg-gray-950 text-white p-6 max-w-5xl mx-auto flex flex-col justify-between relative">
       {/* Top Bar */}
@@ -120,14 +159,43 @@ export default function MemeMode() {
         <Link to="/" className="flex items-center gap-2 text-gray-400 hover:text-white text-sm font-semibold">
           <ArrowLeft className="w-4 h-4" /> Back to Dashboard
         </Link>
-        <div className="flex items-center gap-2 text-purple-400 font-extrabold text-xl">
-          <Sparkles className="w-6 h-6 animate-pulse" /> Meme Mode
+        <div className="flex items-center gap-4">
+          <div className="flex items-center gap-2 bg-purple-900/50 border border-purple-500/40 px-3 py-1.5 rounded-full text-purple-300 font-bold text-sm">
+            <Trophy className="w-4 h-4 text-yellow-400" /> Leaderboard: {leaderboardScore} pts
+          </div>
+          <div className="flex items-center gap-2 text-purple-400 font-extrabold text-xl">
+            <Sparkles className="w-6 h-6 animate-pulse" /> Meme Mode
+          </div>
         </div>
       </div>
 
-      <p className="text-center text-gray-400 mb-8">
-        Drag a question tile on the left and drop it onto its matching answer on the right!
-      </p>
+      {/* Dynamic Progress Indicator */}
+      <div className="text-center mb-8">
+        <p className="text-gray-400 mb-2">
+          Drag a question tile on the left and drop it onto its matching answer on the right!
+        </p>
+        <div className="inline-block bg-gray-800/80 px-4 py-1.5 rounded-full border border-gray-700 text-sm text-gray-300 font-medium">
+          Matched: <span className="text-purple-400 font-bold">{correctCount}</span> / {pairs.length}
+        </div>
+      </div>
+
+      {/* Completion Banner */}
+      {isCompleted && (
+        <div className="mb-8 p-6 bg-gradient-to-r from-purple-900/80 via-emerald-900/80 to-purple-900/80 border-2 border-emerald-400 rounded-2xl text-center shadow-2xl">
+          <h2 className="text-2xl font-extrabold text-emerald-300 mb-2 flex items-center justify-center gap-2">
+            <Trophy className="w-7 h-7 text-yellow-400" /> Mode Complete! 🎉
+          </h2>
+          <p className="text-gray-200 text-sm mb-4">
+            You matched all <span className="font-bold">{pairs.length}</span> tiles! {pointsAwarded ? <span className="text-yellow-300 font-bold">+3 Points</span> : <span className="text-gray-400 font-semibold">(Already Claimed)</span>} added to your leaderboard score.
+          </p>
+          <button
+            onClick={resetGame}
+            className="inline-flex items-center gap-2 bg-emerald-500 hover:bg-emerald-400 text-gray-950 font-extrabold px-5 py-2.5 rounded-xl transition-all shadow-lg hover:scale-105"
+          >
+            <RotateCcw className="w-4 h-4" /> Play Again (New Round)
+          </button>
+        </div>
+      )}
 
       {/* Drag & Drop Area */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
@@ -175,7 +243,7 @@ export default function MemeMode() {
                 onDrop={(e) => handleDrop(e, a.id)}
                 className={`p-4 rounded-xl border font-medium transition-all min-h-[60px] flex items-center ${
                   connectedPromptId
-                    ? connectedPromptId === a.id
+                    ? Number(connectedPromptId) === a.id
                       ? 'bg-emerald-900/30 border-emerald-500 text-emerald-300'
                       : 'bg-red-900/30 border-red-500 text-red-300'
                     : 'bg-gray-800/60 border-dashed border-gray-600 hover:border-purple-400'
