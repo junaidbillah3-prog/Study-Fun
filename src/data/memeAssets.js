@@ -1,6 +1,16 @@
 export const MEME_ASSETS = {
   incorrect: [
     {
+      type: 'audio',
+      audio: 'https://cezcbppjqqnmdmfvnalz.supabase.co/storage/v1/object/public/Assets/audio/guys_umm_sound_effect_mp3_40776.mp3',
+      image:'https://cezcbppjqqnmdmfvnalz.supabase.co/storage/v1/object/public/Assets/Png/umguys.gif',
+    },
+    {
+      type: 'audio',
+      audio: 'https://cezcbppjqqnmdmfvnalz.supabase.co/storage/v1/object/public/Assets/audio/huh_sound_effect_mp3_39965.mp3',
+      image: 'https://cezcbppjqqnmdmfvnalz.supabase.co/storage/v1/object/public/Assets/Png/huhhhh.gif',
+    },
+    {
       type: 'video',
       video: 'https://cezcbppjqqnmdmfvnalz.supabase.co/storage/v1/object/public/Assets/Mp4/smth%20aint%20right.mp4',
       image: '',
@@ -45,6 +55,16 @@ export const MEME_ASSETS = {
     }
   ],
   correct: [
+    {
+      type: 'audio',
+      audio: 'https://cezcbppjqqnmdmfvnalz.supabase.co/storage/v1/object/public/Assets/audio/idaft_harder_better_faster_mp3_40453.mp3',
+      image: 'https://cezcbppjqqnmdmfvnalz.supabase.co/storage/v1/object/public/Assets/Png/daft.gif',
+    },
+    {
+      type: 'audio',
+      audio: 'https://cezcbppjqqnmdmfvnalz.supabase.co/storage/v1/object/public/Assets/audio/tiki_tiki_phonk_sound_effect_mp3_39653.mp3',
+      image: 'https://cezcbppjqqnmdmfvnalz.supabase.co/storage/v1/object/public/Assets/Png/tom%20tiki.gif',
+    },
     {
       type: 'audio',
       audio: '',
