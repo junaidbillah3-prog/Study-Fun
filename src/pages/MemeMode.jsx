@@ -363,10 +363,6 @@ const SAMPLE_PAIRS = {
 
 
   ],
-  'history': [
-    { id: 1, prompt: 'Cold War', answer: 'US vs USSR tension without direct war' },
-    { id: 2, prompt: '1994', answer: 'First democratic election in South Africa' },
-  ]
 };
 
 export default function MemeMode() {
