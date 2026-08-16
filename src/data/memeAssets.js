@@ -1,6 +1,21 @@
 export const MEME_ASSETS = {
   incorrect: [
     {
+      type: 'video',
+      video: 'https://cezcbppjqqnmdmfvnalz.supabase.co/storage/v1/object/public/Assets/Mp4/damn_l_meme_.mp4',
+      image: '',
+    },
+    {
+      type: 'audio',
+      audio: 'https://cezcbppjqqnmdmfvnalz.supabase.co/storage/v1/object/public/Assets/audio/what_the_hell.mp3',
+      image: 'https://cezcbppjqqnmdmfvnalz.supabase.co/storage/v1/object/public/Assets/Png/dog%20huhhh.gif',
+    },
+    {
+      type: 'video',
+      video: 'https://cezcbppjqqnmdmfvnalz.supabase.co/storage/v1/object/public/Assets/Mp4/brother%20uhh.mp4',
+      image: '',
+    },
+    {
       type: 'audio',
       audio: 'https://cezcbppjqqnmdmfvnalz.supabase.co/storage/v1/object/public/Assets/audio/guys_umm_sound_effect_mp3_40776.mp3',
       image:'https://cezcbppjqqnmdmfvnalz.supabase.co/storage/v1/object/public/Assets/Png/umguys.gif',
@@ -41,20 +56,32 @@ export const MEME_ASSETS = {
       image: 'https://cezcbppjqqnmdmfvnalz.supabase.co/storage/v1/object/public/Assets/Png/speedddd.jpg'
     },
     {
+      type: 'video',
+      video: 'https://cezcbppjqqnmdmfvnalz.supabase.co/storage/v1/object/public/Assets/Mp4/why_are_you_gay.mp4',
+      image: '',
+    }, 
+    {
       type: 'audio',
       audio: 'https://cezcbppjqqnmdmfvnalz.supabase.co/storage/v1/object/public/Assets/audio/fahh_long_sound_effect_mp3_68436.mp3',
       image: 'https://cezcbppjqqnmdmfvnalz.supabase.co/storage/v1/object/public/Assets/Png/robot.jpg'
     },
     {
       type: 'video',
-      video: 'https://cezcbppjqqnmdmfvnalz.supabase.co/storage/v1/object/public/Assets/Mp4/oh_my_god_bruh_oh_hell_nah_man_wtf_bro_h264_66596.mp4'
+      video: 'https://cezcbppjqqnmdmfvnalz.supabase.co/storage/v1/object/public/Assets/Mp4/oh_my_god_bruh_oh_hell_nah_man_wtf_bro_h264_66596.mp4',
+      image: '',
     },
     {
       type: 'video',
-      video: 'https://cezcbppjqqnmdmfvnalz.supabase.co/storage/v1/object/public/Assets/Mp4/oh_my_god_bruh_oh_hell_nah_man_wtf_bro_h264_66596.mp4'
-    }
+      video: 'https://cezcbppjqqnmdmfvnalz.supabase.co/storage/v1/object/public/Assets/Mp4/oh_my_god_bruh_oh_hell_nah_man_wtf_bro_h264_66596.mp4',
+      image: '',
+    }  
   ],
   correct: [
+    {
+      type: 'audio',
+      audio: 'https://cezcbppjqqnmdmfvnalz.supabase.co/storage/v1/object/public/Assets/audio/gigachad.mp3',
+      image: 'https://cezcbppjqqnmdmfvnalz.supabase.co/storage/v1/object/public/Assets/Png/gigachad.gif',
+    },
     {
       type: 'audio',
       audio: 'https://cezcbppjqqnmdmfvnalz.supabase.co/storage/v1/object/public/Assets/audio/idaft_harder_better_faster_mp3_40453.mp3',
@@ -72,12 +99,27 @@ export const MEME_ASSETS = {
     },
     {
       type: 'video',
+      video: 'https://cezcbppjqqnmdmfvnalz.supabase.co/storage/v1/object/public/Assets/Mp4/rizzzz.mp4',
+      image: '',
+    },
+    {
+      type: 'video',
       video: 'https://cezcbppjqqnmdmfvnalz.supabase.co/storage/v1/object/public/Assets/Mp4/yeah_boy.mp4_h264_27042.mp4',
       image: '',
     },
     {
       type: 'video',
       video: 'https://cezcbppjqqnmdmfvnalz.supabase.co/storage/v1/object/public/Assets/Mp4/lebron-james-i-guess-bro.mp4',
+      image: '',
+    },
+    {
+      type: 'video',
+      video: 'https://cezcbppjqqnmdmfvnalz.supabase.co/storage/v1/object/public/Assets/Mp4/sigma.mp4',
+      image: '',
+    },
+    {
+      type: 'video',
+      video: 'https://cezcbppjqqnmdmfvnalz.supabase.co/storage/v1/object/public/Assets/Mp4/okee.mp4',
       image: '',
     },
     {
