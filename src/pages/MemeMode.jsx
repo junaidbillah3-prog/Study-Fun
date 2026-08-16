@@ -395,20 +395,32 @@ export default function MemeMode() {
   const videoRef = useRef(null);
   const audioRef = useRef(null);
 
-  const resetGame = () => {
-    setConnections({});
-    setIsCompleted(false);
-    setPointsAwarded(false);
-    setSelectedPromptId(null);
-    setActiveMeme(null);
+const shuffleArray = (array) => {
+  const arr = [...array];
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+};
 
-    const shuffledPool = [...pairs].sort(() => Math.random() - 0.5);
-    const roundPairs = shuffledPool.slice(0, 5);
+const resetGame = () => {
+  setConnections({});
+  setIsCompleted(false);
+  setPointsAwarded(false);
+  setSelectedPromptId(null);
+  setActiveMeme(null);
 
-    setPrompts([...roundPairs].sort(() => Math.random() - 0.5));
-    setAnswers([...roundPairs].sort(() => Math.random() - 0.5));
-  };
 
+  const shuffledPool = shuffleArray(pairs);
+  
+ 
+  const roundPairs = shuffledPool.slice(0, 5);
+
+
+  setPrompts(shuffleArray(roundPairs));
+  setAnswers(shuffleArray(roundPairs));
+};
   useEffect(() => {
     resetGame();
     const savedScore = parseInt(localStorage.getItem('leaderboard_score') || '0', 10);
