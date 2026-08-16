@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useSearchParams } from 'react-router-dom';
 import { ArrowLeft, Sparkles, Trophy, RotateCcw } from 'lucide-react';
 import { getRandomMeme } from '../data/memeAssets';
 import { SAMPLE_PAIRS } from '../data/Meme-tiles';
@@ -8,7 +8,7 @@ import { SAMPLE_PAIRS } from '../data/Meme-tiles';
 export default function MemeMode() {
   const { subjectId } = useParams();
   const pairs = SAMPLE_PAIRS[subjectId] || SAMPLE_PAIRS['life-sciences'];
-
+  const [searchParams] = useSearchParams();
   const quizLength = parseInt(searchParams.get('count')) || 8;
 
   const [prompts, setPrompts] = useState([]);
