@@ -120,7 +120,7 @@ export default function Dashboard() {
           {/* 3-Dot Menu Toggle Button */}
           <button
             onClick={() => setIsMenuOpen(true)}
-            className="p-2 text-gray-400 hover:text-white bg-gray-900/60 hover:bg-gray-800 border border-gray-700 rounded-xl transition-all"
+            className="px-1 py-2 text-gray-400 hover:text-white bg-gray-900/60 hover:bg-gray-800 border border-gray-700 rounded-xl transition-all"
             title="Open Menu"
           >
             <MoreVertical className="w-5 h-5" />
@@ -131,7 +131,7 @@ export default function Dashboard() {
           {/* Leaderboard Button */}
           <Link
             to="/leaderboard"
-            className="flex items-center gap-2 px-3.2 py-1.5 bg-yellow-500/10 border border-yellow-500/30 text-yellow-400 font-bold text-sm rounded-xl hover:bg-yellow-500/20 transition-all"
+            className="flex items-center gap-2 px-3.5 py-1.5 bg-yellow-500/10 border border-yellow-500/30 text-yellow-400 font-bold text-sm rounded-xl hover:bg-yellow-500/20 transition-all"
           >
             <Trophy className="w-4 h-4" />
             Leaderboard
