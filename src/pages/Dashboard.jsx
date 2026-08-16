@@ -125,8 +125,6 @@ export default function Dashboard() {
           >
             <MoreVertical className="w-5 h-5" />
           </button>
-          <Award className="w-6 h-6 text-yellow-400" />
-          <span className="font-bold text-white">Study-Fun Matric</span>
         </div>
 
         <div className="flex items-center gap-3">
