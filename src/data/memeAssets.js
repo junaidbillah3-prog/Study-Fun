@@ -104,8 +104,28 @@ export const MEME_ASSETS = {
   ]
 };
 
+let correctQueue = [];
+let incorrectQueue = [];
+
 export function getRandomMeme(isCorrect) {
-  const pool = isCorrect ? MEME_ASSETS.correct : MEME_ASSETS.incorrect;
-  const randomIndex = Math.floor(Math.random() * pool.length);
-  return pool[randomIndex];
+  const pool = isCorrect ? MEME_ASSETS.correct : MEME_ASSETS.incorrect; //
+  let queue = isCorrect ? correctQueue : incorrectQueue;
+
+
+  if (queue.length === 0) {
+ 
+    const shuffled = [...pool];
+    
+  
+    for (let i = shuffled.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+    }
+    
+  
+    queue.push(...shuffled.slice(0, 5));
+  }
+
+
+  return queue.shift();
 }
