@@ -131,7 +131,7 @@ export default function Dashboard() {
           {/* Leaderboard Button */}
           <Link
             to="/leaderboard"
-            className="flex items-center gap-2 px-3.5 py-1.5 bg-yellow-500/10 border border-yellow-500/30 text-yellow-400 font-bold text-sm rounded-xl hover:bg-yellow-500/20 transition-all"
+            className="flex items-center gap-2 px-3.2 py-1.5 bg-yellow-500/10 border border-yellow-500/30 text-yellow-400 font-bold text-sm rounded-xl hover:bg-yellow-500/20 transition-all"
           >
             <Trophy className="w-4 h-4" />
             Leaderboard
