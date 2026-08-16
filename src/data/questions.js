@@ -1178,10 +1178,10 @@ export const questionsData = {
   'mathematics': [
     {
       id: 1,
-      question: "What is the derivative of f(x) = x^2 with respect to x?",
-      options: ["x", "2x", "x^3 / 3", "2"],
-      answer: "2x",
-      explanation: "Using the power rule, the derivative of x^n is n*x^(n-1)."
+      question: "What is the derivative of $f(x) = x^2$ with respect to $x$?",
+      options: ["$x$", "$2x$", "$x^3 / 3$", "2$"],
+      answer: "$2x$",
+      explanation: "Using the power rule, the derivative of $x^n$ is $n*x^(n-1)$."
     },
     
   ]
