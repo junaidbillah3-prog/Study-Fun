@@ -116,7 +116,7 @@ export default function Dashboard() {
     <div className="min-h-screen p-8 max-w-5xl mx-auto flex flex-col justify-center">
       {/* Top Header & Auth Bar */}
       <div className="flex justify-between items-center mb-10 bg-gray-800/40 border border-gray-700/60 p-4 rounded-2xl backdrop-blur-md">
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-3">
           {/* 3-Dot Menu Toggle Button */}
           <button
             onClick={() => setIsMenuOpen(true)}
@@ -131,7 +131,7 @@ export default function Dashboard() {
           {/* Leaderboard Button */}
           <Link
             to="/leaderboard"
-            className="flex items-center gap-2 px-3.5 py-1.5 bg-yellow-500/10 border border-yellow-500/30 text-yellow-400 font-bold text-sm rounded-xl hover:bg-yellow-500/20 transition-all"
+            className="flex items-center gap-2 px-3.5 py-1.5 bg-yellow-500/10 border border-yellow-500/30 text-yellow-400 font-bold text-sm rounded-xl hover:bg-yellow-500/20 transition-all translate-x-1"
           >
             <Trophy className="w-4 h-4" />
             Leaderboard
