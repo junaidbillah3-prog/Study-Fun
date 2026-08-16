@@ -204,6 +204,7 @@ export default function Quiz() {
         </h3>
 
         <div className="space-y-3 mb-6">
+          <span>{option}</span>
           {currentQuestion.options.map((option, idx) => {
             let style = "bg-gray-900 border-gray-700 text-gray-200 hover:border-gray-500";
             
