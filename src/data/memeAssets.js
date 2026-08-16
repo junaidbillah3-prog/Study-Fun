@@ -2,6 +2,11 @@ export const MEME_ASSETS = {
   incorrect: [
     {
       type: 'video',
+      video: 'https://cezcbppjqqnmdmfvnalz.supabase.co/storage/v1/object/public/Assets/Mp4/smth%20aint%20right.mp4',
+      image: '',
+    },
+    {
+      type: 'video',
       video: 'https://cezcbppjqqnmdmfvnalz.supabase.co/storage/v1/object/public/Assets/Mp4/football.mp4',
       image: '',
     },
@@ -40,6 +45,21 @@ export const MEME_ASSETS = {
     }
   ],
   correct: [
+    {
+      type: 'audio',
+      audio: '',
+      image: 'https://cezcbppjqqnmdmfvnalz.supabase.co/storage/v1/object/public/Assets/Png/mj%20popcorn.gif',
+    },
+    {
+      type: 'video',
+      video: 'https://cezcbppjqqnmdmfvnalz.supabase.co/storage/v1/object/public/Assets/Mp4/yeah_boy.mp4_h264_27042.mp4',
+      image: '',
+    },
+    {
+      type: 'video',
+      video: 'https://cezcbppjqqnmdmfvnalz.supabase.co/storage/v1/object/public/Assets/Mp4/lebron-james-i-guess-bro.mp4',
+      image: '',
+    },
     {
       type: 'audio',
       audio: 'https://cezcbppjqqnmdmfvnalz.supabase.co/storage/v1/object/public/Assets/audio/omg_its_albert_einstein_sound_effect_mp3_67493.mp3',
