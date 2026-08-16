@@ -33,8 +33,8 @@ export default function Dashboard() {
 
   const subjects = [
     { id: 'life-sciences', name: 'Life Sciences', icon: BookOpen, color: 'text-emerald-400 border-emerald-500/30 hover:bg-emerald-500/10' },
-    { id: 'physics', name: 'Physics (Paper 1)', icon: Atom, color: 'text-cyan-400 border-cyan-500/30 hover:bg-cyan-500/10' },
-    { id: 'chemistry', name: 'Chemistry (Paper 2)', icon: Sparkles, color: 'text-teal-400 border-teal-500/30 hover:bg-teal-500/10' },
+    { id: 'physics', name: 'Physics ', icon: Atom, color: 'text-cyan-400 border-cyan-500/30 hover:bg-cyan-500/10' },
+    { id: 'chemistry', name: 'Chemistry', icon: flask-conical, color: 'text-teal-400 border-teal-500/30 hover:bg-teal-500/10' },
     { id: 'history', name: 'History', icon: Globe, color: 'text-amber-400 border-amber-500/30 hover:bg-amber-500/10' },
     { id: 'mathematics', name: 'Mathematics', icon: Calculator, color: 'text-purple-400 border-purple-500/30 hover:bg-purple-500/10' },
   ];
@@ -82,7 +82,7 @@ export default function Dashboard() {
       </div>
 
       <div className="text-center mb-10">
-        <h1 className="text-5xl font-extrabold text-blue-400 mb-3 tracking-tight">Study-Fun By Junaid ⚡</h1>
+        <h1 className="text-5xl font-extrabold text-blue-400 mb-3 tracking-tight">Study-Fun By Junaid</h1>
         <p className="text-lg text-gray-400">South African Matric Revision Platform!</p>
       </div>
 
