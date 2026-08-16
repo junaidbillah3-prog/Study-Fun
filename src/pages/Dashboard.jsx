@@ -63,9 +63,47 @@ export default function Dashboard() {
         }
       ]
     },
+    {
+      id: 'history',
+      name: 'History',
+      icon: Globe,
+      color: 'text-amber-400 border-amber-500/30 hover:bg-amber-500/10',
+      hasSubPapers: true,
+      papers: [
+        {
+          id: 'Vietnam-War',
+          name: 'Vietnam War',
+          description: 'The Vietnam War and its global implications',
+          topics: ['Vietnam War', 'Global Implications']
+        },
+        {
+          id: 'Cold-War',
+          name: 'Cold War',
+          description: 'The Cold War and its global implications',
+          topics: ['Cold War', 'Global Implications']
+        },
+        {
+          id: 'civil-rights-movement-(USA)',
+          name: 'Civil Rights Movement (USA)',
+          description: 'The Civil Rights Movement in the United States and its Outcomes',
+          topics: ['Civil Rights Movement', 'The Outcomes']
+        },
+        {
+          id: 'Black-Consciousness-Movement-(South-Africa)',
+          name: 'Black Consciousness Movement (South Africa)',
+          description: 'The Black Consciousness Movement in South Africa and its Impact',
+          topics: ['Black Consciousness Movement', 'Impact']
+        },
+        {
+          id: 'Road-to-Democracy',
+          name: 'Road to Democracy (South Africa)',
+          description: 'The Road to Democracy in South Africa and its Challenges',
+          topics: ['Road to Democracy', 'Challenges']
+        },
+      ]
+    },
     { id: 'physics', name: 'Physics', icon: Atom, color: 'text-cyan-400 border-cyan-500/30 hover:bg-cyan-500/10' },
     { id: 'chemistry', name: 'Chemistry', icon: FlaskConical, color: 'text-teal-400 border-teal-500/30 hover:bg-teal-500/10' },
-    { id: 'history', name: 'History', icon: Globe, color: 'text-amber-400 border-amber-500/30 hover:bg-amber-500/10' },
     { id: 'mathematics', name: 'Mathematics', icon: Calculator, color: 'text-purple-400 border-purple-500/30 hover:bg-purple-500/10' },
   ];
 

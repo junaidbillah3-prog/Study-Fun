@@ -3,7 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import { ArrowLeft, Sparkles, Trophy, RotateCcw } from 'lucide-react';
 import { getRandomMeme } from '../data/memeAssets';
 
-// Sample meme matching pairs per subject
+
 const SAMPLE_PAIRS = {
   'life-sciences-p1': [
     { id: 1, prompt: 'Mitochondria', answer: 'Powerhouse of the cell' },
@@ -189,6 +189,178 @@ const SAMPLE_PAIRS = {
   ],
   'mathematics': [
   
+    {
+      id: 1,
+      prompt: 'Derivative from First Principles',
+      answer: '\\(f\'(x) = \\lim_{h \\to 0} \\frac{f(x + h) - f(x)}{h}\\)'
+    },
+    {
+      id: 2,
+      prompt: 'Quadratic Formula',
+      answer: '\\(x = \\frac{-b \\pm \\sqrt{b^2 - 4ac}}{2a}\\)'
+    },
+    {
+      id: 3,
+      prompt: 'Effective Interest Rate Formula',
+      answer: '\\(1 + i_{\\text{eff}} = \\left(1 + \\frac{i^{(m)}}{m}\\right)^m\\)'
+    },
+    {
+      id: 4,
+      prompt: 'Compound Growth Formula',
+      answer: '\\(A = P(1 + i)^n\\)'
+    },
+    {
+      id: 5,
+      prompt: 'Sum to Infinity of a Geometric Series',
+      answer: '\\(S_\\infty = \\frac{a}{1 - r} \\text{ where } |r| < 1\\)'
+    },
+    {
+      id: 6,
+      prompt: 'Sine Rule',
+      answer: '\\(\\frac{\\sin A}{a} = \\frac{\\sin B}{b} = \\frac{\\sin C}{c}\\)'
+    },
+    {
+      id: 7,
+      prompt: 'Cosine Rule',
+      answer: '\\(a^2 = b^2 + c^2 - 2bc \\cos A\\)'
+    },
+    {
+      id: 8,
+      prompt: 'Gradient Formula',
+      answer: '\\(m = \\frac{y_2 - y_1}{x_2 - x_1}\\)'
+    },
+    {
+    id: 9,
+    prompt: 'Convergent Series',
+    answer: 'A geometric series that approaches a finite sum because \\(-1 < r < 1\\)'
+  },
+  {
+    id: 10,
+    prompt: 'Stationary Point',
+    answer: 'A point on a curve where the first derivative equals zero (\\(f\'(x) = 0\\))'
+  },
+  {
+    id: 11,
+    prompt: 'Point of Inflection',
+    answer: 'A point where the concavity of a curve changes and \\(f\'\'(x) = 0\\)'
+  },
+  {
+    id: 12,
+    prompt: 'Arithmetic Sequence',
+    answer: 'A sequence with a constant difference \\(d\\) between consecutive terms'
+  },
+  {
+    id: 13,
+    prompt: 'Geometric Sequence',
+    answer: 'A sequence with a constant ratio \\(r\\) between consecutive terms'
+  },
+  {
+    id: 14,
+    prompt: 'Mutually Exclusive Events',
+    answer: 'Events that cannot occur simultaneously, such that \\(P(A \\text{ and } B) = 0\\)'
+  },
+  {
+    id: 15,
+    prompt: 'Independent Events',
+    answer: 'Events where the outcome of one does not affect the probability of the other'
+  },
+  {
+    id: 16,
+    prompt: 'Average Gradient',
+    answer: 'The gradient of the straight line joining two distinct points on a curve'
+  },
+  {
+    id: 17,
+    prompt: 'Perpendicular Lines',
+    answer: 'Lines whose gradients have a product of \\(-1\\)'
+  },
+  {
+    id: 18,
+    prompt: 'Nominal Interest Rate',
+    answer: 'The stated annual interest rate before accounting for the frequency of compounding'
+  },
+  {
+    id: 19,
+    prompt: 'Discriminant',
+    answer: 'The expression \\(b^2 - 4ac\\) which determines the nature of roots for a quadratic equation'
+  },
+  {
+    id: 20,
+    prompt: 'Factor Theorem',
+    answer: 'States that if \\(f(a) = 0\\), then \\((x - a)\\) is a factor of the polynomial \\(f(x)\\)'
+  },
+  {
+    id: 21,
+    prompt: 'Angle of Inclination',
+    answer: 'The acute angle \\(\\theta\\) a straight line makes with the positive x-axis, where \\(\\tan \\theta = m\\)'
+  },
+  {
+    id: 22,
+    prompt: 'Equation of a Circle',
+    answer: '\\((x - a)^2 + (y - b)^2 = r^2\\) for a circle centered at \\((a, b)\\) with radius \\(r\\)'
+  },
+  {
+    id: 23,
+    prompt: 'Double Angle Identity for Sine',
+    answer: '\\(\\sin(2\\theta) = 2\\sin\\theta\\cos\\theta\\)'
+  },
+  {
+    id: 24,
+    prompt: 'Compound Angle Identity for Cosine',
+    answer: '\\(\\cos(\\alpha + \\beta) = \\cos\\alpha\\cos\\beta - \\sin\\alpha\\sin\\beta\\)'
+  },
+  {
+    id: 25,
+    prompt: 'Future Value Annuity Formula',
+    answer: '\\(F = \\frac{x[(1 + i)^n - 1]}{i}\\)'
+  },
+  {
+    id: 26,
+    prompt: 'Present Value Annuity Formula',
+    answer: '\\(P = \\frac{x[1 - (1 + i)^{-n}]}{i}\\)'
+  },
+  {
+    id: 27,
+    prompt: 'Conditional Probability',
+    answer: '\\(P(A|B) = \\frac{P(A \\text{ and } B)}{P(B)}\\)'
+  },
+  {
+    id: 28,
+    prompt: 'Second Derivative Test',
+    answer: 'Determines a local maximum when \\(f\'\'(x) < 0\\) or a local minimum when \\(f\'\'(x) > 0\\)'
+  },
+  {
+    id: 29,
+    prompt: 'Standard Deviation',
+    answer: 'A statistical measure of the dispersion or spread of a dataset around its mean'
+  },
+  {
+    id: 30,
+    prompt: 'Least Squares Regression Line',
+    answer: 'The line of best fit of the form \\(y = A + Bx\\) that minimizes squared residuals'
+  },
+  
+  {
+    id: 31,
+    prompt: 'Logarithmic Law (Power Rule)',
+    answer: '\\(\\log_a(x^n) = n \\log_a x\\)'
+  },
+  {
+    id: 32,
+    prompt: 'Inverse Function Reflection',
+    answer: 'Functions and their inverses are reflections of each other across the line \\(y = x\\)'
+  },
+  {
+    id: 33,
+    prompt: 'Fundamental Counting Principle',
+    answer: 'If an event can occur in \\(m\\) ways and a second independent event in \\(n\\) ways, both can occur in \\(m \\times n\\) ways'
+  },
+  {
+    id: 34,
+    prompt: 'Standard Deviation Interpretation',
+    answer: 'A higher standard deviation indicates greater spread or dispersion of data around the mean'
+  }
+
 
   ],
   'history': [
