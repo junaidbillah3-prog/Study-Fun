@@ -3,6 +3,9 @@ import { useState, useEffect } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { getRandomQuestions } from '../data/questions';
 import { ArrowLeft, RotateCcw, CheckCircle, XCircle, Loader2 } from 'lucide-react';
+import MathText from '../components/MathText';
+
+
 
 export default function Quiz() {
   const { subjectId } = useParams();
@@ -197,7 +200,7 @@ export default function Quiz() {
       {/* Main Question Card */}
       <div className="bg-gray-800 border border-gray-700 p-8 rounded-3xl shadow-2xl mb-6">
         <h3 className="text-2xl font-bold text-white mb-6 leading-relaxed">
-          {currentQuestion.question}
+          <MathText text={currentQuestion.question} />
         </h3>
 
         <div className="space-y-3 mb-6">
@@ -222,7 +225,7 @@ export default function Quiz() {
                 disabled={isSubmitted}
                 className={`w-full text-left p-4 rounded-xl border transition-all text-base font-medium flex justify-between items-center ${style}`}
               >
-                <span>{option}</span>
+                
                 {isSubmitted && option === currentQuestion.answer && (
                   <CheckCircle className="w-5 h-5 text-emerald-400" />
                 )}
@@ -238,7 +241,7 @@ export default function Quiz() {
         {isSubmitted && currentQuestion.explanation && (
           <div className="p-4 rounded-xl bg-gray-900 border border-gray-700 text-gray-300 text-sm mb-6">
             <strong className="text-blue-400">Explanation: </strong>
-            {currentQuestion.explanation}
+            <MathText text={currentQuestion.explanation} />
           </div>
         )}
 
