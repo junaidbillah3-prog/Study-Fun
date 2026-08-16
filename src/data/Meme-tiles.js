@@ -1,4 +1,4 @@
-const SAMPLE_PAIRS = {
+export const SAMPLE_PAIRS = {
   'life-sciences-p1': [
     { id: 1, prompt: 'Mitochondria', answer: 'Powerhouse of the cell' },
     { id: 2, prompt: 'Chloroplast', answer: 'Site of photosynthesis' },
