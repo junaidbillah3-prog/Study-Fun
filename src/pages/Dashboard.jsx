@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { BookOpen, Atom, Globe, Calculator, Award, User, LogOut, Trophy, Sparkles, FlaskConical, Dna, X, FileText, ArrowRight, Edit3 } from 'lucide-react';
+import { BookOpen, Atom, Globe, Calculator, Award, User, LogOut, Trophy, Sparkles, FlaskConical, Dna, X, FileText, ArrowRight, Edit3, MoreVertical, Home, MessageSquare, Info } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 import AuthModal from '../components/AuthModal';
 import UsernameModal from '../components/UsernameModal';
@@ -11,6 +11,7 @@ export default function Dashboard() {
   const [isAuthOpen, setIsAuthOpen] = useState(false);
   const [isUsernameOpen, setIsUsernameOpen] = useState(false);
   const [selectedPaperSubject, setSelectedPaperSubject] = useState(null);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   useEffect(() => {
     if (!supabase) return;
@@ -116,6 +117,14 @@ export default function Dashboard() {
       {/* Top Header & Auth Bar */}
       <div className="flex justify-between items-center mb-10 bg-gray-800/40 border border-gray-700/60 p-4 rounded-2xl backdrop-blur-md">
         <div className="flex items-center gap-2">
+          {/* 3-Dot Menu Toggle Button */}
+          <button
+            onClick={() => setIsMenuOpen(true)}
+            className="p-2 text-gray-400 hover:text-white bg-gray-900/60 hover:bg-gray-800 border border-gray-700 rounded-xl transition-all"
+            title="Open Menu"
+          >
+            <MoreVertical className="w-5 h-5" />
+          </button>
           <Award className="w-6 h-6 text-yellow-400" />
           <span className="font-bold text-white">Study-Fun Matric</span>
         </div>
@@ -253,6 +262,80 @@ export default function Dashboard() {
         user={user}
         onUsernameUpdated={(updatedUser) => setUser(updatedUser)}
       />
+      {/* Slide-Over Side Drawer Menu */}
+      {isMenuOpen && (
+        <div className="fixed inset-0 z-50 flex">
+          {/* Dark Backdrop */}
+          <div
+            className="fixed inset-0 bg-black/60 backdrop-blur-sm transition-opacity"
+            onClick={() => setIsMenuOpen(false)}
+          />
+
+          {/* Side Panel */}
+          <div className="relative w-72 max-w-[80vw] bg-gray-900 border-r border-gray-800 p-6 flex flex-col justify-between h-full z-10 shadow-2xl">
+            <div>
+              <div className="flex items-center justify-between mb-8 pb-4 border-b border-gray-800">
+                <div className="flex items-center gap-2">
+                  <Award className="w-6 h-6 text-yellow-400" />
+                  <span className="font-bold text-white text-lg">Menu</span>
+                </div>
+                <button
+                  onClick={() => setIsMenuOpen(false)}
+                  className="p-1 text-gray-400 hover:text-white rounded-lg hover:bg-gray-800 transition-colors"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
+
+              <nav className="space-y-2">
+                <button
+                  onClick={() => { setIsMenuOpen(false); navigate('/'); }}
+                  className="w-full flex items-center gap-3 px-3.5 py-2.5 text-gray-300 hover:text-white hover:bg-gray-800/60 rounded-xl transition-all text-sm font-semibold"
+                >
+                  <Home className="w-4 h-4 text-blue-400" />
+                  Dashboard
+                </button>
+
+                <button
+                  onClick={() => { setIsMenuOpen(false); navigate('/leaderboard'); }}
+                  className="w-full flex items-center gap-3 px-3.5 py-2.5 text-gray-300 hover:text-white hover:bg-gray-800/60 rounded-xl transition-all text-sm font-semibold"
+                >
+                  <Trophy className="w-4 h-4 text-yellow-400" />
+                  Leaderboard
+                </button>
+
+                <button
+                  onClick={() => { setIsMenuOpen(false); }}
+                  className="w-full flex items-center gap-3 px-3.5 py-2.5 text-gray-300 hover:text-white hover:bg-gray-800/60 rounded-xl transition-all text-sm font-semibold"
+                >
+                  <BookOpen className="w-4 h-4 text-emerald-400" />
+                  Past Papers
+                </button>
+
+                <button
+                  onClick={() => { setIsMenuOpen(false); }}
+                  className="w-full flex items-center gap-3 px-3.5 py-2.5 text-gray-300 hover:text-white hover:bg-gray-800/60 rounded-xl transition-all text-sm font-semibold"
+                >
+                  <MessageSquare className="w-4 h-4 text-purple-400" />
+                  Send Feedback
+                </button>
+
+                <button
+                  onClick={() => { setIsMenuOpen(false); }}
+                  className="w-full flex items-center gap-3 px-3.5 py-2.5 text-gray-300 hover:text-white hover:bg-gray-800/60 rounded-xl transition-all text-sm font-semibold"
+                >
+                  <Info className="w-4 h-4 text-cyan-400" />
+                  About Study-Fun
+                </button>
+              </nav>
+            </div>
+
+            <div className="pt-4 border-t border-gray-800 text-xs text-gray-500 text-center">
+              Study-Fun Matric v1.0
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
