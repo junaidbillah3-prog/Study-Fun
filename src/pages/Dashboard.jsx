@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { BookOpen, Atom, Globe, Calculator, Award, User, LogOut, Trophy, Sparkles, FlaskConical, Dna, X, FileText, ArrowRight, Edit3, MoreVertical, Home, MessageSquare, Info } from 'lucide-react';
+import { BookOpen, Atom, Globe, Calculator, Award, User, LogOut, Trophy, Mail, Sparkles, FlaskConical, Dna, X, FileText, ArrowRight, Edit3, MoreVertical, Home, MessageSquare, Info, coins } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 import AuthModal from '../components/AuthModal';
 import UsernameModal from '../components/UsernameModal';
@@ -289,6 +289,21 @@ export default function Dashboard() {
 
               <nav className="space-y-2">
                 <button
+                  onClick={() => {
+                    setIsMenuOpen(false);
+                    window.open('https://ko-fi.com/junaidsf', '_blank');
+                  }}
+                  className="w-full flex items-center justify-between px-3.5 py-2.5 text-gray-300 hover:text-white hover:bg-yellow-500/10 border border-transparent hover:border-yellow-500/30 rounded-xl transition-all text-sm font-semibold group"
+                >
+                  <div className="flex items-center gap-3">
+                    <Coins className="w-4 h-4 text-yellow-400 group-hover:rotate-12 transition-transform" />
+                    <span>Donate</span>
+                  </div>
+                  <span className="text-[10px] font-extrabold bg-yellow-500/20 text-yellow-400 border border-yellow-500/40 px-2 py-0.5 rounded-full uppercase tracking-wider">
+                    Support
+                  </span>
+                </button>
+                <button
                   onClick={() => { setIsMenuOpen(false); navigate('/'); }}
                   className="w-full flex items-center gap-3 px-3.5 py-2.5 text-gray-300 hover:text-white hover:bg-gray-800/60 rounded-xl transition-all text-sm font-semibold"
                 >
@@ -313,10 +328,20 @@ export default function Dashboard() {
                 </button>
 
                 <button
-                  onClick={() => { setIsMenuOpen(false); }}
+                  onClick={() => {
+                    setIsMenuOpen(false);
+                    const recipient = 'Junaidbillah3@gmail.com';
+                    const subject = encodeURIComponent('Study-Fun Matric Feedback');
+                    const body = encodeURIComponent('Hi Junaid,\n\nI would like to share the following feedback about Study-Fun:\n\n');
+
+                    
+                    const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${recipient}&su=${subject}&body=${body}`;
+
+                    window.open(gmailUrl, '_blank');
+                  }}
                   className="w-full flex items-center gap-3 px-3.5 py-2.5 text-gray-300 hover:text-white hover:bg-gray-800/60 rounded-xl transition-all text-sm font-semibold"
                 >
-                  <MessageSquare className="w-4 h-4 text-purple-400" />
+                  <Mail className="w-4 h-4 text-purple-400" />
                   Send Feedback
                 </button>
 
