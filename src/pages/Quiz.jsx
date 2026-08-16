@@ -1,6 +1,6 @@
 import { supabase } from '../lib/supabase';
 import { useState, useEffect } from 'react';
-// 1. ADDED useSearchParams HERE
+
 import { useParams, useNavigate, Link, useSearchParams } from 'react-router-dom'; 
 import { getRandomQuestions } from '../data/questions';
 import { ArrowLeft, RotateCcw, CheckCircle, XCircle, Loader2 } from 'lucide-react';
@@ -10,7 +10,7 @@ export default function Quiz() {
     const { subjectId } = useParams();
     const navigate = useNavigate();
 
-    // 2. READ THE URL PARAMETER
+ 
     const [searchParams] = useSearchParams();
     const quizLength = parseInt(searchParams.get('count')) || 10;
 
@@ -46,7 +46,7 @@ export default function Quiz() {
           if (!error && data && data.length > 0) {
             loadedQuestions = data
               .sort(() => 0.5 - Math.random())
-              // 3. REPLACED 10 WITH quizLength
+              
               .slice(0, quizLength); 
           }
         } catch (err) {
@@ -55,7 +55,7 @@ export default function Quiz() {
       }
 
       if (loadedQuestions.length === 0) {
-        // 4. REPLACED 10 WITH quizLength
+        
         loadedQuestions = getRandomQuestions(subjectId, quizLength); 
       }
 
