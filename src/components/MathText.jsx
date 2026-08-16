@@ -1,47 +1,20 @@
 import React from 'react';
-import { InlineMath, BlockMath } from 'react-katex';
+// 1. Mandatory CSS for formatting
+import 'katex/dist/katex.min.css';
+import Latex from 'react-latex-next';
 
 export default function MathText({ text }) {
-  if (text === null || text === undefined) return null;
-  if (typeof text !== 'string') return <span>{String(text)}</span>;
+  if (!text) return null;
 
-  // Split string into plain text and LaTeX blocks ($...$ or $$...$$)
-  const parts = text.split(/(\$\$.*?\$\$|\$.*?\$)/g);
+  // 2. Fixes double backslashes if you copy-pasted JS strings directly into Supabase
+  const formattedText = typeof text === 'string' 
+    ? text.replace(/\\\\\(/g, '\\(').replace(/\\\\\)/g, '\\)') 
+    : text;
 
   return (
-    <span>
-      {parts.map((part, index) => {
-        if (!part) return null;
-
-        // Display / Block Math ($$...$$)
-        if (part.startsWith('$$') && part.endsWith('$$') && part.length >= 4) {
-          const math = part.slice(2, -2).trim();
-          return (
-            <BlockMath
-              key={index}
-              math={math}
-              renderError={() => <span>{part}</span>}
-            />
-          );
-        }
-
-        // Inline Math ($...$) - ensure it has content inside
-        if (part.startsWith('$') && part.endsWith('$') && part.length >= 2) {
-          const math = part.slice(1, -1).trim();
-          if (!math) return <React.Fragment key={index}>{part}</React.Fragment>;
-          
-          return (
-            <InlineMath
-              key={index}
-              math={math}
-              renderError={() => <span>{part}</span>}
-            />
-          );
-        }
-
-        // Plain text segment
-        return <React.Fragment key={index}>{part}</React.Fragment>;
-      })}
-    </span>
+    // 3. strict={false} prevents a tiny LaTeX typo from crashing the whole app
+    <Latex strict={false}>
+      {formattedText}
+    </Latex>
   );
 }
