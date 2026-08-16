@@ -12,7 +12,6 @@ function App() {
         <Route path="/" element={<Dashboard />} />
         <Route path="/quiz/:subjectId" element={<Quiz />} />
         <Route path="/meme-mode/:subjectId" element={<MemeMode />} />
-        <Route path="/leaderboard" element={<Leaderboard />} />
       </Routes>
     </BrowserRouter>
   );

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { BookOpen, Atom, Globe, Calculator, Award, User, LogOut, Trophy, Sparkles } from 'lucide-react';
+import { BookOpen, Atom, Globe, Calculator, Award, User, LogOut, Trophy, Sparkles, FlaskConical} from 'lucide-react';
 import { supabase } from '../lib/supabase';
 import AuthModal from '../components/AuthModal';
 
@@ -34,7 +34,7 @@ export default function Dashboard() {
   const subjects = [
     { id: 'life-sciences', name: 'Life Sciences', icon: BookOpen, color: 'text-emerald-400 border-emerald-500/30 hover:bg-emerald-500/10' },
     { id: 'physics', name: 'Physics ', icon: Atom, color: 'text-cyan-400 border-cyan-500/30 hover:bg-cyan-500/10' },
-    { id: 'chemistry', name: 'Chemistry', icon: <FlaskConical />, color: 'text-teal-400 border-teal-500/30 hover:bg-teal-500/10' },
+    { id: 'chemistry', name: 'Chemistry', icon: FlaskConical, color: 'text-teal-400 border-teal-500/30 hover:bg-teal-500/10' },
     { id: 'history', name: 'History', icon: Globe, color: 'text-amber-400 border-amber-500/30 hover:bg-amber-500/10' },
     { id: 'mathematics', name: 'Mathematics', icon: Calculator, color: 'text-purple-400 border-purple-500/30 hover:bg-purple-500/10' },
   ];
