@@ -116,7 +116,7 @@ export default function Dashboard() {
     <div
       className="min-h-screen bg-cover bg-center bg-fixed bg-no-repeat relative text-white"
       style={{
-        backgroundImage: 'url(/public/images/bg.jpg)',
+        backgroundImage: 'url(https://cezcbppjqqnmdmfvnalz.supabase.co/storage/v1/object/public/Assets/asset-app/cool-geometric-triangular-figure-neon-laser-light-great-backgrounds-wallpapers.jpg)',
       }}
     >
       {/* Dark Overlay so text remains crystal clear */}
