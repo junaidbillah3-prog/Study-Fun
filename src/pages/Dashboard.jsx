@@ -1,30 +1,34 @@
 import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { BookOpen, Atom, Globe, Calculator, Award, User, LogOut, Trophy, Sparkles, FlaskConical, Dna, X, FileText, ArrowRight } from 'lucide-react';
+import { BookOpen, Atom, Globe, Calculator, Award, User, LogOut, Trophy, Sparkles, FlaskConical, Dna, X, FileText, ArrowRight, Edit3 } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 import AuthModal from '../components/AuthModal';
+import UsernameModal from '../components/UsernameModal';
 
 export default function Dashboard() {
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
   const [isAuthOpen, setIsAuthOpen] = useState(false);
+  const [isUsernameOpen, setIsUsernameOpen] = useState(false);
   const [selectedPaperSubject, setSelectedPaperSubject] = useState(null);
 
   useEffect(() => {
     if (!supabase) return;
 
-    // Get current session
     supabase.auth.getSession().then(({ data: { session } }) => {
       setUser(session?.user ?? null);
     });
 
-    // Listen for auth changes
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
       setUser(session?.user ?? null);
     });
 
     return () => subscription.unsubscribe();
   }, []);
+
+  const displayName = user
+    ? (user.user_metadata?.username || user.user_metadata?.full_name || user.email?.split('@')[0])
+    : '';
 
   const handleLogout = async () => {
     if (supabase) {
@@ -128,9 +132,16 @@ export default function Dashboard() {
 
           {user ? (
             <div className="flex items-center gap-3">
-              <span className="text-sm text-gray-300 flex items-center gap-2 bg-gray-900/60 px-3 py-1.5 rounded-xl border border-gray-700">
-                <User className="w-4 h-4 text-blue-400" /> {user.email}
-              </span>
+              <button
+                onClick={() => setIsUsernameOpen(true)}
+                className="text-sm text-gray-300 flex items-center gap-2 bg-gray-900/60 hover:bg-gray-800 px-3 py-1.5 rounded-xl border border-gray-700 transition-all group"
+                title="Click to edit username"
+              >
+                <User className="w-4 h-4 text-blue-400" />
+                <span className="font-semibold text-white">{displayName}</span>
+                <Edit3 className="w-3.5 h-3.5 text-gray-500 group-hover:text-blue-400 transition-colors ml-1" />
+              </button>
+
               <button
                 onClick={handleLogout}
                 className="flex items-center gap-1.5 text-sm font-semibold text-red-400 hover:text-red-300 bg-red-500/10 px-3 py-1.5 rounded-xl border border-red-500/20 transition-all"
@@ -155,7 +166,7 @@ export default function Dashboard() {
       </div>
 
       <h2 className="text-2xl font-semibold text-gray-200 mb-6">Select a Subject</h2>
-      
+
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
         {subjects.map((subj) => {
           const IconComponent = subj.icon;
@@ -197,7 +208,7 @@ export default function Dashboard() {
       {selectedPaperSubject && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm p-4">
           <div className="relative w-full max-w-lg rounded-2xl border border-gray-700 bg-gray-900 p-6 shadow-2xl">
-            <button 
+            <button
               onClick={() => setSelectedPaperSubject(null)}
               className="absolute right-4 top-4 text-gray-400 hover:text-white"
             >
@@ -236,6 +247,12 @@ export default function Dashboard() {
       )}
 
       <AuthModal isOpen={isAuthOpen} onClose={() => setIsAuthOpen(false)} />
+      <UsernameModal
+        isOpen={isUsernameOpen}
+        onClose={() => setIsUsernameOpen(false)}
+        user={user}
+        onUsernameUpdated={(updatedUser) => setUser(updatedUser)}
+      />
     </div>
   );
 }

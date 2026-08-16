@@ -3,6 +3,7 @@ import { supabase } from '../lib/supabase';
 
 export default function AuthModal({ isOpen, onClose }) {
   const [isSignUp, setIsSignUp] = useState(false);
+  const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
@@ -24,9 +25,17 @@ export default function AuthModal({ isOpen, onClose }) {
     }
 
     if (isSignUp) {
-      const { error } = await supabase.auth.signUp({ email, password });
+      const { error } = await supabase.auth.signUp({
+        email,
+        password,
+        options: {
+          data: {
+            username: username.trim() || email.split('@')[0]
+          }
+        }
+      });
       if (error) setError(error.message);
-      else setMessage('Success!.');
+      else setMessage('Success! Please check your email to confirm registration.');
     } else {
       const { error } = await supabase.auth.signInWithPassword({ email, password });
       if (error) setError(error.message);
@@ -71,6 +80,23 @@ export default function AuthModal({ isOpen, onClose }) {
         )}
 
         <form onSubmit={handleAuth} className="space-y-4">
+          {isSignUp && (
+            <div>
+              <label className="block text-xs font-semibold text-gray-400 uppercase mb-1">
+                Username
+              </label>
+              <input
+                type="text"
+                required
+                maxLength={20}
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                placeholder="Choose a username"
+                className="w-full bg-gray-900 border border-gray-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-blue-500"
+              />
+            </div>
+          )}
+
           <div>
             <label className="block text-xs font-semibold text-gray-400 uppercase mb-1">Email Address</label>
             <input
