@@ -1,8 +1,8 @@
-import { supabase } from '../lib/supabaseClient';
+import { supabase } from '../lib/supabase';
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { getRandomQuestions } from '../data/questions';
-import { ArrowLeft, RotateCcw, CheckCircle, XCircle } from 'lucide-react';
+import { ArrowLeft, RotateCcw, CheckCircle, XCircle, Loader2 } from 'lucide-react';
 
 export default function Quiz() {
   const { subjectId } = useParams();
@@ -14,25 +14,71 @@ export default function Quiz() {
   const [score, setScore] = useState(0);
   const [isCompleted, setIsCompleted] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     loadNewQuiz();
   }, [subjectId]);
 
-  const loadNewQuiz = () => {
-    const randomized = getRandomQuestions(subjectId, 10);
-    setQuestions(randomized);
+  const loadNewQuiz = async () => {
+    setIsLoading(true);
     setCurrentIndex(0);
     setScore(0);
     setSelectedOption(null);
     setIsCompleted(false);
     setIsSubmitted(false);
+
+    let loadedQuestions = [];
+
+    // Attempt to fetch from Supabase table filtering by subjectId (e.g. 'life-sciences-p1')
+    if (supabase) {
+      try {
+        const { data, error } = await supabase
+          .from('questions')
+          .select('*')
+          .eq('subject_id', subjectId);
+
+        if (!error && data && data.length > 0) {
+          // Shuffle retrieved database records and select up to 10
+          loadedQuestions = data
+            .sort(() => 0.5 - Math.random())
+            .slice(0, 10);
+        }
+      } catch (err) {
+        console.error('Error fetching questions from Supabase:', err);
+      }
+    }
+
+    // Fallback to local questions repository if Supabase returns no records
+    if (loadedQuestions.length === 0) {
+      loadedQuestions = getRandomQuestions(subjectId, 10);
+    }
+
+    setQuestions(loadedQuestions);
+    setIsLoading(false);
   };
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center text-white">
+        <div className="flex items-center gap-3">
+          <Loader2 className="w-6 h-6 animate-spin text-blue-400" />
+          <p className="text-lg font-medium text-gray-300">Loading questions...</p>
+        </div>
+      </div>
+    );
+  }
 
   if (!questions.length) {
     return (
-      <div className="min-h-screen flex items-center justify-center text-white">
-        <p>No questions found for this subject.</p>
+      <div className="min-h-screen flex flex-col items-center justify-center text-white gap-4">
+        <p className="text-lg font-medium text-gray-300">No questions found for this subject.</p>
+        <Link
+          to="/"
+          className="px-5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white font-bold text-sm rounded-xl transition-all"
+        >
+          Return to Dashboard
+        </Link>
       </div>
     );
   }
@@ -52,7 +98,6 @@ export default function Quiz() {
     if (isCorrect) {
       setScore((prev) => prev + 1);
     }
-    
   };
 
   const handleNextQuestion = async () => {

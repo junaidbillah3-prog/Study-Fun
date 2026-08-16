@@ -1,12 +1,14 @@
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { BookOpen, Atom, Globe, Calculator, Award, User, LogOut, Trophy, Sparkles, FlaskConical} from 'lucide-react';
+import { Link, useNavigate } from 'react-router-dom';
+import { BookOpen, Atom, Globe, Calculator, Award, User, LogOut, Trophy, Sparkles, FlaskConical, Dna, X, FileText, ArrowRight } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 import AuthModal from '../components/AuthModal';
 
 export default function Dashboard() {
+  const navigate = useNavigate();
   const [user, setUser] = useState(null);
   const [isAuthOpen, setIsAuthOpen] = useState(false);
+  const [selectedPaperSubject, setSelectedPaperSubject] = useState(null);
 
   useEffect(() => {
     if (!supabase) return;
@@ -31,9 +33,37 @@ export default function Dashboard() {
     }
   };
 
+  const handleSubjectClick = (subj, mode) => {
+    if (subj.hasSubPapers) {
+      setSelectedPaperSubject({ subject: subj, mode });
+    } else {
+      navigate(`/${mode}/${subj.id}`);
+    }
+  };
+
   const subjects = [
-    { id: 'life-sciences', name: 'Life Sciences', icon: BookOpen, color: 'text-emerald-400 border-emerald-500/30 hover:bg-emerald-500/10' },
-    { id: 'physics', name: 'Physics ', icon: Atom, color: 'text-cyan-400 border-cyan-500/30 hover:bg-cyan-500/10' },
+    {
+      id: 'life-sciences',
+      name: 'Life Sciences',
+      icon: Dna,
+      color: 'text-emerald-400 border-emerald-500/30 hover:bg-emerald-500/10',
+      hasSubPapers: true,
+      papers: [
+        {
+          id: 'life-sciences-p1',
+          name: 'Paper 1',
+          description: 'Meiosis, Reproduction, Nervous System, Endocrine & Homeostasis',
+          topics: ['Meiosis', 'Human Reproduction', 'Nervous System', 'Endocrine & Homeostasis']
+        },
+        {
+          id: 'life-sciences-p2',
+          name: 'Paper 2',
+          description: 'DNA & RNA, Genetics & Inheritance, Evolution',
+          topics: ['DNA: Code of Life', 'Genetics', 'Evolution']
+        }
+      ]
+    },
+    { id: 'physics', name: 'Physics', icon: Atom, color: 'text-cyan-400 border-cyan-500/30 hover:bg-cyan-500/10' },
     { id: 'chemistry', name: 'Chemistry', icon: FlaskConical, color: 'text-teal-400 border-teal-500/30 hover:bg-teal-500/10' },
     { id: 'history', name: 'History', icon: Globe, color: 'text-amber-400 border-amber-500/30 hover:bg-amber-500/10' },
     { id: 'mathematics', name: 'Mathematics', icon: Calculator, color: 'text-purple-400 border-purple-500/30 hover:bg-purple-500/10' },
@@ -107,23 +137,65 @@ export default function Dashboard() {
               </div>
 
               <div className="grid grid-cols-2 gap-3 mt-2">
-                <Link
-                  to={`/quiz/${subj.id}`}
+                <button
+                  onClick={() => handleSubjectClick(subj, 'quiz')}
                   className="text-center py-2 px-4 bg-blue-600/80 hover:bg-blue-600 text-white font-bold text-sm rounded-xl transition-all"
                 >
                   Classic Quiz
-                </Link>
-                <Link
-                  to={`/meme-mode/${subj.id}`}
+                </button>
+                <button
+                  onClick={() => handleSubjectClick(subj, 'meme-mode')}
                   className="text-center py-2 px-4 bg-purple-600/80 hover:bg-purple-600 text-white font-bold text-sm rounded-xl transition-all flex items-center justify-center gap-1.5"
                 >
                   <Sparkles className="w-4 h-4" /> Meme Mode
-                </Link>
+                </button>
               </div>
             </div>
           );
         })}
       </div>
+
+      {/* Paper Selection Modal */}
+      {selectedPaperSubject && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm p-4">
+          <div className="relative w-full max-w-lg rounded-2xl border border-gray-700 bg-gray-900 p-6 shadow-2xl">
+            <button 
+              onClick={() => setSelectedPaperSubject(null)}
+              className="absolute right-4 top-4 text-gray-400 hover:text-white"
+            >
+              <X className="h-5 w-5" />
+            </button>
+
+            <h2 className="text-2xl font-bold text-white mb-1">
+              {selectedPaperSubject.subject.name} - {selectedPaperSubject.mode === 'meme-mode' ? 'Meme Mode' : 'Classic Quiz'}
+            </h2>
+            <p className="text-gray-400 mb-6 text-sm">Select an examination paper to start practice:</p>
+
+            <div className="space-y-4">
+              {selectedPaperSubject.subject.papers.map((paper) => (
+                <button
+                  key={paper.id}
+                  onClick={() => {
+                    const mode = selectedPaperSubject.mode;
+                    setSelectedPaperSubject(null);
+                    navigate(`/${mode}/${paper.id}`);
+                  }}
+                  className="w-full text-left group cursor-pointer rounded-xl border border-gray-800 bg-gray-800/50 p-4 transition-all hover:border-emerald-500/50 hover:bg-emerald-500/10"
+                >
+                  <div className="flex items-center justify-between mb-1">
+                    <div className="flex items-center gap-2">
+                      <FileText className="h-5 w-5 text-emerald-400" />
+                      <h3 className="font-semibold text-white">{paper.name}</h3>
+                    </div>
+                    <ArrowRight className="h-4 w-4 text-gray-500 transition-transform group-hover:translate-x-1 group-hover:text-emerald-400" />
+                  </div>
+                  <p className="text-xs text-gray-400">{paper.description}</p>
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
 
       <AuthModal isOpen={isAuthOpen} onClose={() => setIsAuthOpen(false)} />
     </div>
