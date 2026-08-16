@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { BookOpen, Atom, Globe, Calculator, Award, User, LogOut, Trophy, Mail, Sparkles, FlaskConical, Dna, X, FileText, ArrowRight, Edit3, MoreVertical, Home, MessageSquare, Info, coins } from 'lucide-react';
+import { BookOpen, Atom, Globe, Calculator, Award, User, LogOut, Trophy, Mail, Sparkles, FlaskConical, Dna, X, FileText, ArrowRight, Edit3, MoreVertical, Home, MessageSquare, Info, Coins } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 import AuthModal from '../components/AuthModal';
 import UsernameModal from '../components/UsernameModal';
