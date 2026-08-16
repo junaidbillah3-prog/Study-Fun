@@ -12,6 +12,7 @@ export default function Dashboard() {
   const [isUsernameOpen, setIsUsernameOpen] = useState(false);
   const [selectedPaperSubject, setSelectedPaperSubject] = useState(null);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [questionCount, setQuestionCount] = useState(10);
 
   useEffect(() => {
     if (!supabase) return;
@@ -237,6 +238,27 @@ export default function Dashboard() {
               </h2>
               <p className="text-gray-400 mb-6 text-sm">Select an examination paper to start practice:</p>
 
+              {/* NEW: Question Count Selector */}
+              <div className="mb-6 bg-gray-800/60 p-3 rounded-xl border border-gray-700/50">
+                <label className="text-xs text-gray-400 uppercase font-bold tracking-wider mb-3 block text-center">
+                  How many questions?
+                </label>
+                <div className="flex gap-3">
+                  {[10, 20, 30].map(num => (
+                    <button
+                      key={num}
+                      onClick={() => setQuestionCount(num)}
+                      className={`flex-1 py-2 rounded-lg text-sm font-bold transition-all ${questionCount === num
+                          ? 'bg-blue-600 text-white shadow-lg shadow-blue-500/20'
+                          : 'bg-gray-900 text-gray-400 border border-gray-700 hover:bg-gray-800'
+                        }`}
+                    >
+                      {num}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
               <div className="space-y-4">
                 {selectedPaperSubject.subject.papers.map((paper) => (
                   <button
@@ -244,7 +266,9 @@ export default function Dashboard() {
                     onClick={() => {
                       const mode = selectedPaperSubject.mode;
                       setSelectedPaperSubject(null);
-                      navigate(`/${mode}/${paper.id}`);
+
+                      // NEW: Pass the questionCount in the URL
+                      navigate(`/${mode}/${paper.id}?count=${questionCount}`);
                     }}
                     className="w-full text-left group cursor-pointer rounded-xl border border-gray-800 bg-gray-800/50 p-4 transition-all hover:border-emerald-500/50 hover:bg-emerald-500/10"
                   >

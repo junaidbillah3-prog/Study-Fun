@@ -415,7 +415,7 @@ const resetGame = () => {
   const shuffledPool = shuffleArray(pairs);
   
  
-  const roundPairs = shuffledPool.slice(0, 5);
+  const roundPairs = shuffledPool.slice(0, 8);
 
 
   setPrompts(shuffleArray(roundPairs));
