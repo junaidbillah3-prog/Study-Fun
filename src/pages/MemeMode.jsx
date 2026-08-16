@@ -395,32 +395,32 @@ export default function MemeMode() {
   const videoRef = useRef(null);
   const audioRef = useRef(null);
 
-const shuffleArray = (array) => {
-  const arr = [...array];
-  for (let i = arr.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [arr[i], arr[j]] = [arr[j], arr[i]];
-  }
-  return arr;
-};
+  const shuffleArray = (array) => {
+    const arr = [...array];
+    for (let i = arr.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return arr;
+  };
 
-const resetGame = () => {
-  setConnections({});
-  setIsCompleted(false);
-  setPointsAwarded(false);
-  setSelectedPromptId(null);
-  setActiveMeme(null);
-
-
-  const shuffledPool = shuffleArray(pairs);
-  
- 
-  const roundPairs = shuffledPool.slice(0, 8);
+  const resetGame = () => {
+    setConnections({});
+    setIsCompleted(false);
+    setPointsAwarded(false);
+    setSelectedPromptId(null);
+    setActiveMeme(null);
 
 
-  setPrompts(shuffleArray(roundPairs));
-  setAnswers(shuffleArray(roundPairs));
-};
+    const shuffledPool = shuffleArray(pairs);
+
+
+    const roundPairs = shuffledPool.slice(0, 8);
+
+
+    setPrompts(shuffleArray(roundPairs));
+    setAnswers(shuffleArray(roundPairs));
+  };
   useEffect(() => {
     resetGame();
     const savedScore = parseInt(localStorage.getItem('leaderboard_score') || '0', 10);
@@ -515,6 +515,11 @@ const resetGame = () => {
   };
 
   const handleDisconnect = (promptId) => {
+
+    if (Number(connections[promptId]) === Number(promptId)) {
+      return;
+    }
+
     stopCurrentMedia();
     setActiveMeme(null);
     setIsCompleted(false);
@@ -583,21 +588,40 @@ const resetGame = () => {
           {prompts.map((p) => {
             const isConnected = connections[p.id] !== undefined;
             const isSelected = selectedPromptId === p.id;
+
+            
+            const isCorrectMatch = isConnected && Number(connections[p.id]) === Number(p.id);
+
             return (
               <div
                 key={p.id}
-                draggable
-                onDragStart={(e) => handleDragStart(e, p.id)}
-                onClick={() => handlePromptClick(p.id)}
-                className={`p-2.5 md:p-4 rounded-xl border font-bold text-xs md:text-base cursor-pointer active:cursor-grabbing transition-all touch-none flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 ${isConnected
-                    ? 'bg-purple-900/40 border-purple-500/50 text-purple-200'
-                    : isSelected
-                      ? 'bg-purple-800/80 border-purple-400 text-white ring-2 ring-purple-400 shadow-lg scale-[1.02]'
-                      : 'bg-gray-800 border-gray-700 hover:border-gray-500 text-white'
+                
+                draggable={!isCorrectMatch}
+                onDragStart={(e) => {
+                  if (isCorrectMatch) {
+                    e.preventDefault();
+                    return;
+                  }
+                  handleDragStart(e, p.id);
+                }}
+                onClick={() => {
+                  if (!isCorrectMatch) handlePromptClick(p.id);
+                }}
+                className={`p-2.5 md:p-4 rounded-xl border font-bold text-xs md:text-base transition-all flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 
+                  ${!isCorrectMatch ? 'cursor-pointer active:cursor-grabbing touch-none' : 'cursor-default'} 
+                  ${isCorrectMatch
+                    ? 'bg-emerald-900/40 border-emerald-500/50 text-emerald-200' // NEW: Make correctly locked prompts green!
+                    : isConnected
+                      ? 'bg-purple-900/40 border-purple-500/50 text-purple-200'
+                      : isSelected
+                        ? 'bg-purple-800/80 border-purple-400 text-white ring-2 ring-purple-400 shadow-lg scale-[1.02]'
+                        : 'bg-gray-800 border-gray-700 hover:border-gray-500 text-white'
                   }`}
               >
                 <span>{p.prompt}</span>
-                {isConnected && (
+
+                {/* NEW: Only show the disconnect button if it's connected BUT wrong */}
+                {isConnected && !isCorrectMatch && (
                   <button
                     onClick={(e) => {
                       e.stopPropagation();
@@ -627,12 +651,12 @@ const resetGame = () => {
                 onDrop={(e) => handleDrop(e, a.id)}
                 onClick={() => handleAnswerClick(a.id)}
                 className={`p-2.5 md:p-4 rounded-xl border font-medium text-xs md:text-base transition-all min-h-[60px] flex items-center cursor-pointer ${connectedPromptId
-                    ? Number(connectedPromptId) === a.id
-                      ? 'bg-emerald-900/30 border-emerald-500 text-emerald-300'
-                      : 'bg-red-900/30 border-red-500 text-red-300'
-                    : selectedPromptId !== null
-                      ? 'bg-gray-800/80 border-purple-500/70 hover:border-purple-400 animate-pulse'
-                      : 'bg-gray-800/60 border-dashed border-gray-600 hover:border-purple-400'
+                  ? Number(connectedPromptId) === a.id
+                    ? 'bg-emerald-900/30 border-emerald-500 text-emerald-300'
+                    : 'bg-red-900/30 border-red-500 text-red-300'
+                  : selectedPromptId !== null
+                    ? 'bg-gray-800/80 border-purple-500/70 hover:border-purple-400 animate-pulse'
+                    : 'bg-gray-800/60 border-dashed border-gray-600 hover:border-purple-400'
                   }`}
               >
                 <span>{a.answer}</span>
