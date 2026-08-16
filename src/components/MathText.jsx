@@ -14,7 +14,7 @@ export default function MathText({ text }) {
         if (!part) return null;
 
         // Display / Block Math ($$...$$)
-        if (part.startsWith('$$') && part.endsWith('$$')) {
+        if (part.startsWith('$$') && part.endsWith('$$') && part.length >= 4) {
           const math = part.slice(2, -2).trim();
           return (
             <BlockMath
@@ -25,9 +25,11 @@ export default function MathText({ text }) {
           );
         }
 
-        // Inline Math ($...$)
-        if (part.startsWith('$') && part.endsWith('$')) {
+        // Inline Math ($...$) - ensure it has content inside
+        if (part.startsWith('$') && part.endsWith('$') && part.length >= 2) {
           const math = part.slice(1, -1).trim();
+          if (!math) return <React.Fragment key={index}>{part}</React.Fragment>;
+          
           return (
             <InlineMath
               key={index}
