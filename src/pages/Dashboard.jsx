@@ -334,7 +334,7 @@ export default function Dashboard() {
                     const subject = encodeURIComponent('Study-Fun Matric Feedback');
                     const body = encodeURIComponent('Hi Junaid,\n\nI would like to share the following feedback about Study-Fun:\n\n');
 
-                    
+
                     const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${recipient}&su=${subject}&body=${body}`;
 
                     window.open(gmailUrl, '_blank');
@@ -346,7 +346,10 @@ export default function Dashboard() {
                 </button>
 
                 <button
-                  onClick={() => { setIsMenuOpen(false); }}
+                  onClick={() => {
+                    setIsMenuOpen(false);
+                    navigate('/about');
+                  }}
                   className="w-full flex items-center gap-3 px-3.5 py-2.5 text-gray-300 hover:text-white hover:bg-gray-800/60 rounded-xl transition-all text-sm font-semibold"
                 >
                   <Info className="w-4 h-4 text-cyan-400" />
