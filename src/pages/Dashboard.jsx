@@ -83,7 +83,7 @@ export default function Dashboard() {
           topics: ['Cold War', 'Global Implications']
         },
         {
-          id: 'civil-rights-movement-(USA)',
+          id: 'Civil-Rights-Movement-(USA)',
           name: 'Civil Rights Movement (USA)',
           description: 'The Civil Rights Movement in the United States and its Outcomes',
           topics: ['Civil Rights Movement', 'The Outcomes']
@@ -95,7 +95,7 @@ export default function Dashboard() {
           topics: ['Black Consciousness Movement', 'Impact']
         },
         {
-          id: 'Road-to-Democracy',
+          id: 'Road-To-Democracy',
           name: 'Road to Democracy (South Africa)',
           description: 'The Road to Democracy in South Africa and its Challenges',
           topics: ['Road to Democracy', 'Challenges']
