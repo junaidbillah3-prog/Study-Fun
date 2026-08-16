@@ -5,8 +5,6 @@ import { getRandomQuestions } from '../data/questions';
 import { ArrowLeft, RotateCcw, CheckCircle, XCircle, Loader2 } from 'lucide-react';
 import MathText from '../components/MathText';
 
-
-
 export default function Quiz() {
   const { subjectId } = useParams();
   const navigate = useNavigate();
@@ -33,7 +31,6 @@ export default function Quiz() {
 
     let loadedQuestions = [];
 
-    // Attempt to fetch from Supabase table filtering by subjectId (e.g. 'life-sciences-p1')
     if (supabase) {
       try {
         const { data, error } = await supabase
@@ -42,7 +39,6 @@ export default function Quiz() {
           .eq('subject_id', subjectId);
 
         if (!error && data && data.length > 0) {
-          // Shuffle retrieved database records and select up to 10
           loadedQuestions = data
             .sort(() => 0.5 - Math.random())
             .slice(0, 10);
@@ -52,7 +48,6 @@ export default function Quiz() {
       }
     }
 
-    // Fallback to local questions repository if Supabase returns no records
     if (loadedQuestions.length === 0) {
       loadedQuestions = getRandomQuestions(subjectId, 10);
     }
@@ -184,7 +179,6 @@ export default function Quiz() {
 
   return (
     <div className="min-h-screen p-8 max-w-3xl mx-auto flex flex-col justify-center">
-      {/* Quiz Progress Header */}
       <div className="flex justify-between items-center mb-6">
         <button
           onClick={() => navigate('/')}
@@ -197,14 +191,12 @@ export default function Quiz() {
         </span>
       </div>
 
-      {/* Main Question Card */}
       <div className="bg-gray-800 border border-gray-700 p-8 rounded-3xl shadow-2xl mb-6">
         <h3 className="text-2xl font-bold text-white mb-6 leading-relaxed">
-          {currentQuestion.question}
+          <MathText text={currentQuestion.question || currentQuestion.stem} />
         </h3>
 
         <div className="space-y-3 mb-6">
-          <span>{option}</span>
           {currentQuestion.options.map((option, idx) => {
             let style = "bg-gray-900 border-gray-700 text-gray-200 hover:border-gray-500";
             
@@ -226,7 +218,7 @@ export default function Quiz() {
                 disabled={isSubmitted}
                 className={`w-full text-left p-4 rounded-xl border transition-all text-base font-medium flex justify-between items-center ${style}`}
               >
-                
+                <span><MathText text={option} /></span>
                 {isSubmitted && option === currentQuestion.answer && (
                   <CheckCircle className="w-5 h-5 text-emerald-400" />
                 )}
@@ -238,15 +230,13 @@ export default function Quiz() {
           })}
         </div>
 
-        {/* Explanation Box */}
         {isSubmitted && currentQuestion.explanation && (
           <div className="p-4 rounded-xl bg-gray-900 border border-gray-700 text-gray-300 text-sm mb-6">
             <strong className="text-blue-400">Explanation: </strong>
-            {currentQuestion.explanation}
+            <MathText text={currentQuestion.explanation} />
           </div>
         )}
 
-        {/* Action Buttons */}
         {!isSubmitted ? (
           <button
             onClick={handleSubmitAnswer}
