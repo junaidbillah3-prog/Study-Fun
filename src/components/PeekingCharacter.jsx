@@ -5,6 +5,7 @@ import { CHARACTERS } from '../data/charlist';
 
 export default function PeekingCharacter() {
   const [currentChar, setCurrentChar] = useState(null);
+  const [currentMessage, setCurrentMessage] = useState('');
   const [topPosition, setTopPosition] = useState(50);
   const [side, setSide] = useState('right');
   const [isVisible, setIsVisible] = useState(false);
@@ -23,7 +24,14 @@ export default function PeekingCharacter() {
       // 3. Randomize vertical height (15% to 75%)
       const randomTop = Math.floor(Math.random() * 60) + 15;
 
+      // 4. Extract message (supports a single string or an array of multiple quotes)
+      let selectedText = randomChar.message || 'Hi! 🤭';
+      if (Array.isArray(selectedText)) {
+        selectedText = selectedText[Math.floor(Math.random() * selectedText.length)];
+      }
+
       setCurrentChar(randomChar);
+      setCurrentMessage(selectedText);
       setSide(chosenSide);
       setTopPosition(randomTop);
       setIsVisible(true);
@@ -34,7 +42,7 @@ export default function PeekingCharacter() {
     };
 
     const initialTimer = setTimeout(peekAction, 2000);
-    const interval = setInterval(peekAction, 10000);
+    const interval = setInterval(peekAction, 15000);
 
     return () => {
       clearTimeout(initialTimer);
@@ -73,11 +81,11 @@ export default function PeekingCharacter() {
 
         {/* Pop-up Chat Bubble */}
         <div
-          className={`bg-yellow-400 text-gray-900 font-extrabold text-xs px-3 py-1.5 rounded-full shadow-xl transition-all duration-300 delay-200 ${
+          className={`bg-yellow-400 text-gray-900 font-extrabold text-xs px-3 py-1.5 rounded-full shadow-xl transition-all duration-300 delay-200 whitespace-nowrap ${
             isVisible ? 'scale-100 opacity-100' : 'scale-0 opacity-0'
           }`}
         >
-          Hi! 🤭
+          {currentMessage}
         </div>
       </div>
     </div>
