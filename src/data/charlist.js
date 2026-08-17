@@ -15,13 +15,6 @@ export const CHARACTERS=[
 
     },
     {
-        id:'mj',
-        name:'mj',
-        image:mj1,
-        side:'right',
-        message:'hee hee 🕺',
-    },
-    {
         id:'pika',
         name:'pika',
         image: pik1,
@@ -40,7 +33,7 @@ export const CHARACTERS=[
         name:'sponge',
         image:sponge2,
         side:'left',
-        message:['Smart kid','📚']
+        message:['Smart kid','study📚']
     },
     {
         id:'patrick',
@@ -49,5 +42,5 @@ export const CHARACTERS=[
         side:'right',
         message:['🤤', 'Hey there😛']
 
-    }
+    },
 ]
