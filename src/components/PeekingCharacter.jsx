@@ -42,7 +42,7 @@ export default function PeekingCharacter() {
       // 6. Delay visibility slightly so DOM & image update before sliding in
       showTimer = setTimeout(() => {
         setIsVisible(true);
-      }, 50);
+      }, 100);
 
       // 7. Hide character after display time
       hideTimer = setTimeout(() => {
@@ -92,7 +92,7 @@ export default function PeekingCharacter() {
 
         {/* Pop-up Chat Bubble */}
         <div
-          className={`bg-yellow-400 text-gray-900 font-extrabold text-xs px-3 py-1.5 rounded-full shadow-xl transition-all duration-300 delay-200 whitespace-nowrap ${
+          className={`bg-blue-600 text-gray-900 font-extrabold text-xs px-3 py-1.5 rounded-full shadow-xl transition-all duration-300 delay-200 whitespace-nowrap ${
             isVisible ? 'scale-100 opacity-100' : 'scale-0 opacity-0'
           }`}
         >
