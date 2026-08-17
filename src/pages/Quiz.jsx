@@ -116,7 +116,7 @@ export default function Quiz() {
         try {
           const { data: { user } } = await supabase.auth.getUser();
           const displayName = user
-            ? (user.user_metadata?.full_name || user.email.split('@')[0])
+            ? (user.user_metadata?.username || user.user_metadata?.full_name || user.email.split('@')[0])
             : 'Guest Scholar';
 
           const queryField = user ? 'user_id' : 'username';
