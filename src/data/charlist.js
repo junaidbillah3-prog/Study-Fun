@@ -25,7 +25,7 @@ export const CHARACTERS=[
         id:'pika',
         name:'pika',
         image: pik1,
-        side: 'any',
+        side: 'right',
         message: 'pika pika 🥰'
     },
     {
