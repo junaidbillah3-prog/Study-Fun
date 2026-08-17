@@ -69,12 +69,7 @@ export const MEME_ASSETS = {
       type: 'video',
       video: 'https://cezcbppjqqnmdmfvnalz.supabase.co/storage/v1/object/public/Assets/Mp4/oh_my_god_bruh_oh_hell_nah_man_wtf_bro_h264_66596.mp4',
       image: '',
-    },
-    {
-      type: 'video',
-      video: 'https://cezcbppjqqnmdmfvnalz.supabase.co/storage/v1/object/public/Assets/Mp4/oh_my_god_bruh_oh_hell_nah_man_wtf_bro_h264_66596.mp4',
-      image: '',
-    }  
+    }, 
   ],
   correct: [
     {
@@ -170,24 +165,22 @@ let correctQueue = [];
 let incorrectQueue = [];
 
 export function getRandomMeme(isCorrect) {
-  const pool = isCorrect ? MEME_ASSETS.correct : MEME_ASSETS.incorrect; //
-  let queue = isCorrect ? correctQueue : incorrectQueue;
-
+  const pool = isCorrect ? MEME_ASSETS.correct : MEME_ASSETS.incorrect;
+  const queue = isCorrect ? correctQueue : incorrectQueue;
 
   if (queue.length === 0) {
- 
     const shuffled = [...pool];
-    
-  
     for (let i = shuffled.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
       [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
     }
-    
-  
-    queue.push(...shuffled.slice(0, 5));
+    queue.push(...shuffled);
   }
 
-
   return queue.shift();
+}
+
+export function resetMemeQueues() {
+  correctQueue.length = 0;
+  incorrectQueue.length = 0;
 }
