@@ -140,14 +140,6 @@ export default function Dashboard() {
           </div>
 
           <div className="flex items-center gap-3">
-            {/* Leaderboard Button */}
-            <Link
-              to="/leaderboard"
-              className="flex items-center gap-2 px-3.5 py-1.5 bg-yellow-500/10 border border-yellow-500/30 text-yellow-400 font-bold text-sm rounded-xl hover:bg-yellow-500/20 transition-all translate-x-1"
-            >
-              <Trophy className="w-4 h-4" />
-              Leaderboard
-            </Link>
 
             {user ? (
               <div className="flex items-center gap-3">
@@ -320,7 +312,7 @@ export default function Dashboard() {
                     <X className="w-5 h-5" />
                   </button>
                 </div>
-                
+
 
                 <nav className="space-y-2">
                   <button
