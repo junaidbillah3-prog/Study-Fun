@@ -4,6 +4,7 @@ import { BookOpen, Atom, Globe, Calculator, Award, User, LogOut, Trophy, Mail, S
 import { supabase } from '../lib/supabase';
 import AuthModal from '../components/AuthModal';
 import UsernameModal from '../components/UsernameModal';
+import PeekingCharacter from '../components/PeekingCharacter';
 
 export default function Dashboard() {
   const navigate = useNavigate();
@@ -138,6 +139,13 @@ export default function Dashboard() {
             </button>
           </div>
 
+          <div className="min-h-screen relative">
+            {/* Your regular Dashboard UI content */}
+
+            {/* Fun Peeking Character (only loads on dashboard) */}
+            <PeekingCharacter />
+          </div>
+
           <div className="flex items-center gap-3">
             {/* Leaderboard Button */}
             <Link
@@ -249,8 +257,8 @@ export default function Dashboard() {
                       key={num}
                       onClick={() => setQuestionCount(num)}
                       className={`flex-1 py-2 rounded-lg text-sm font-bold transition-all ${questionCount === num
-                          ? 'bg-blue-600 text-white shadow-lg shadow-blue-500/20'
-                          : 'bg-gray-900 text-gray-400 border border-gray-700 hover:bg-gray-800'
+                        ? 'bg-blue-600 text-white shadow-lg shadow-blue-500/20'
+                        : 'bg-gray-900 text-gray-400 border border-gray-700 hover:bg-gray-800'
                         }`}
                     >
                       {num}
@@ -258,6 +266,7 @@ export default function Dashboard() {
                   ))}
                 </div>
               </div>
+
 
               <div className="space-y-4">
                 {selectedPaperSubject.subject.papers.map((paper) => (

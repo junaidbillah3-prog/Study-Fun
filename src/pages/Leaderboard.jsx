@@ -13,9 +13,16 @@ export default function Leaderboard() {
 
   const fetchLeaderboard = async () => {
     setLoading(true);
+
+    // 1. Join the 'profiles' table using the foreign key relationship
     const { data, error } = await supabase
       .from('leaderboard')
-      .select('*')
+      .select(`
+        *,
+        profiles (
+          username
+        )
+      `)
       .order('points', { ascending: false })
       .limit(20);
 
@@ -65,7 +72,12 @@ export default function Leaderboard() {
                       {index === 2 && <Medal className="w-5 h-5 text-amber-600" />}
                       {index > 2 && <span className="text-gray-500 font-bold pl-2">#{index + 1}</span>}
                     </td>
-                    <td className="py-4 px-4 font-semibold text-white">{entry.username}</td>
+                    
+                    {/* 2. Read live username from profiles with fallback */}
+                    <td className="py-4 px-4 font-semibold text-white">
+                      {entry.profiles?.username || entry.username || 'Default User'}
+                    </td>
+                    
                     <td className="py-4 px-4 text-right font-extrabold text-emerald-400 text-lg">
                       {entry.points.toLocaleString()} pts
                     </td>
