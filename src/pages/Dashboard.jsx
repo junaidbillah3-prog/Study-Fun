@@ -184,12 +184,6 @@ export default function Dashboard() {
           <p className="text-lg text-gray-400">South African Matric Revision Platform!</p>
         </div>
 
-        <div className="min-h-screen relative">
-
-          {/* Fun Peeking Character (only loads on dashboard) */}
-          <PeekingCharacter />
-        </div>
-
         <h2 className="text-2xl font-semibold text-gray-200 mb-6">Select a Subject</h2>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
@@ -326,6 +320,7 @@ export default function Dashboard() {
                     <X className="w-5 h-5" />
                   </button>
                 </div>
+                
 
                 <nav className="space-y-2">
                   <button
@@ -402,6 +397,7 @@ export default function Dashboard() {
           </div>
         )}
       </div>
+      <PeekingCharacter />
     </div>
   );
 }
