@@ -145,7 +145,7 @@ export default function Dashboard() {
               <div className="flex items-center gap-3">
                 <button
                   onClick={() => setIsUsernameOpen(true)}
-                  className="text-sm text-gray-300 flex items-center gap-2 bg-gray-900/60 hover:bg-gray-800 px-3 py-1.5 rounded-xl border border-gray-700 transition-all group"
+                  className="text-sm text-gray-300 flex items-center gap-2 bg-gray-900/60 hover:bg-gray-800 px-3 py-1.5 rounded-xl border border-gray-700 transition-all group translate-x-1"
                   title="Click to edit username"
                 >
                   <User className="w-4 h-4 text-blue-400" />
