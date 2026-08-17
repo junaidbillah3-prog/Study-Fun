@@ -2,6 +2,94 @@ export const questionsData = {
   'life-sciences-p1': [
     // --- Meiosis & General Cell Biology ---
     {
+      id: 'p1-m-6',
+      topic: 'p1-m',
+      question: "A human somatic cell in Interphase ($G_2$ phase) has a DNA mass of 12 arbitrary units (a.u.). What will be the total DNA mass in a single nucleus at the end of Telophase I and Telophase II of meiosis, respectively?",
+      options: [
+        "6 a.u. at Telophase I; 3 a.u. at Telophase II",
+        "12 a.u. at Telophase I; 6 a.u. at Telophase II",
+        "6 a.u. at Telophase I; 6 a.u. at Telophase II",
+        "3 a.u. at Telophase I; 1.5 a.u. at Telophase II"
+      ],
+      answer: "6 a.u. at Telophase I; 3 a.u. at Telophase II",
+      explanation: "At $G_2$, DNA replication has already occurred (doubling to 12 a.u.). Meiosis I separates homologous pairs, halving the nuclear DNA mass to 6 a.u. at Telophase I. Meiosis II separates sister chromatids, halving it again to 3 a.u. per haploid gamete nucleus."
+    },
+
+    // --- HUMAN RESPONSES TO THE ENVIRONMENT: VISION & ACCOMMODATION (p1-eye) ---
+    {
+      id: 'p1-eye-1',
+      topic: 'p1-eye',
+      question: "A person sitting in a dimly lit room looks up from reading a fine-print book to focus on a bird flying high in the bright sky outside. Which combined physiological response occurs in the eye?",
+      options: [
+        "Ciliary muscles relax, suspensory ligaments tighten, lens flattens, circular muscles of iris contract",
+        "Ciliary muscles contract, suspensory ligaments slacken, lens becomes convex, radial muscles of iris contract",
+        "Ciliary muscles relax, suspensory ligaments slacken, lens flattens, circular muscles of iris contract",
+        "Ciliary muscles contract, suspensory ligaments tighten, lens becomes convex, radial muscles of iris relax"
+      ],
+      answer: "Ciliary muscles relax, suspensory ligaments tighten, lens flattens, circular muscles of iris contract",
+      explanation: "For distant vision: ciliary muscles relax $\\rightarrow$ suspensory ligaments become taut $\\rightarrow$ lens is pulled flat (less convex). For bright light (pupillary mechanism): circular muscles of the iris contract to constrict the pupil and protect the retina."
+    },
+
+    // --- HUMAN RESPONSES TO THE ENVIRONMENT: EAR & EQUILIBRIUM (p1-ear) ---
+    {
+      id: 'p1-ear-1',
+      topic: 'p1-ear',
+      question: "A gymnast performs a rapid series of somersaults and cartwheels. Which specific sensory structures in the inner ear detect this rotational motion, and where are the generated nerve impulses sent for processing?",
+      options: [
+        "Cristae located inside the ampullae of semicircular canals $\\rightarrow$ Cerebellum",
+        "Maculae located inside the sacculus and utriculus $\\rightarrow$ Cerebrum",
+        "Organ of Corti inside the cochlear duct $\\rightarrow$ Cerebellum",
+        "Otolith membranes inside the tympanic cavity $\\rightarrow$ Medulla oblongata"
+      ],
+      answer: "Cristae located inside the ampullae of semicircular canals $\\rightarrow$ Cerebellum",
+      explanation: "Dynamic equilibrium (speed and direction of rotational movement) is detected by hair cells in the cristae within the ampullae of semicircular canals. Impulses travel via the auditory/vestibular nerve to the cerebellum for involuntary muscle coordination."
+    },
+
+    // --- HOMEOSTASIS & THERMOREGULATION (p1-h) ---
+    {
+      id: 'p1-h-1',
+      topic: 'p1-h',
+      question: "During a cold winter morning in Highveld, a student's core temperature drops slightly. Which combination of negative feedback responses is coordinated by the hypothalamus to restore normal body temperature?",
+      options: [
+        "Vasoconstriction of surface arterioles, contraction of arrector pili muscles, increased thyroxin secretion, and shivering",
+        "Vasodilation of skin arterioles, relaxation of arrector pili muscles, increased sweat gland activity, and reduced metabolic rate",
+        "Vasoconstriction of skin capillaries, increased perspiration rate, and inhibition of adrenaline release",
+        "Vasodilation of deep vein networks, contraction of arrector pili muscles, and reduced shivering thermogenesis"
+      ],
+      answer: "Vasoconstriction of surface arterioles, contraction of arrector pili muscles, increased thyroxin secretion, and shivering",
+      explanation: "To retain/generate heat: vasoconstriction diverts blood away from the skin surface; arrector pili muscles contract to trap an insulating layer of warm air; shivering generates muscular friction heat; increased thyroxin/adrenaline boosts basal cellular respiration."
+    },
+
+    // --- PLANT RESPONSES: CLINOSTAT EXPERIMENTS (p1-pr) ---
+    {
+      id: 'p1-pr-12',
+      topic: 'p1-pr',
+      question: "In a plant physiology investigation, seedling A is mounted on a continuously rotating clinostat placed horizontally. Seedling B is fixed horizontally on a stationary clinostat. Both receive uniform light from above. What will be observed after 48 hours?",
+      options: [
+        "Seedling A grows horizontally straight out; Seedling B stem bends upward and root bends downward",
+        "Seedling A stem bends upward; Seedling B grows horizontally straight out",
+        "Both seedlings show upward growth of stems and downward growth of roots",
+        "Seedling A root curves upward; Seedling B root grows horizontally straight out"
+      ],
+      answer: "Seedling A grows horizontally straight out; Seedling B stem bends upward and root bends downward",
+      explanation: "Continuous rotation on a clinostat exposes all sides of Seedling A to gravitational force equally, preventing auxins from pooling on one side—so it grows straight. Seedling B experiences unilateral gravity: auxins accumulate on the lower side, causing stem upward bending (negative gravitropism) and root downward bending (positive gravitropism)."
+    },
+
+    // --- ENDOCRINE SYSTEM & NEGATIVE FEEDBACK (p1-e) ---
+    {
+      id: 'p1-e-1',
+      topic: 'p1-e',
+      question: "A clinical laboratory report for a patient experiencing lethargy, weight gain, and cold intolerance shows **abnormally high Thyroid-Stimulating Hormone (TSH)** but **extremely low Thyroxin**. What is the physiological cause of these hormone levels?",
+      options: [
+        "The thyroid gland is underactive/damaged, so low thyroxin removes negative feedback, causing the pituitary to continuously release high TSH",
+        "An overactive pituitary gland is releasing excess TSH which inhibits thyroxin synthesis at the target tissue",
+        "A hypothalamic tumor is secreting excess thyroxin-inhibiting factor while destroying the thyroid gland tissue",
+        "Iodine toxicity has blocked pituitary TSH receptors, shutting down thyroxin secretion completely"
+      ],
+      answer: "The thyroid gland is underactive/damaged, so low thyroxin removes negative feedback, causing the pituitary to continuously release high TSH",
+      explanation: "Normally, high thyroxin inhibits TSH release via negative feedback. When the thyroid fails (primary hypothyroidism), thyroxin levels stay low. The pituitary senses this deficiency and secretes elevated TSH in an unfulfilled attempt to stimulate the non-functional thyroid."
+    },
+    {
       id: 'p1-m-1',
       question: "Which organelle is responsible for cellular respiration and ATP production?",
       options: ["Ribosome", "Mitochondrion", "Golgi Body", "Endoplasmic Reticulum"],
@@ -15,6 +103,46 @@ export const questionsData = {
       answer: "Prophase I",
       explanation: "Crossing over occurs between non-sister chromatids during Prophase I to create genetic variation."
     },
+    {
+      id: 'p1-m-3',
+      topic: 'p1-m',
+      question: "During a karyotype analysis of a human fetus, 47 chromosomes are identified, including three copies of chromosome 21. Which error during meiotic division in a parent is directly responsible for this result, and during which phase did it occur?",
+      options: [
+        "Non-disjunction of homologous chromosomes during Anaphase I or sister chromatids during Anaphase II",
+        "Failure of crossing over during Prophase I, leading to chromosome fragmentation",
+        "Failure of DNA replication during Interphase prior to Meiosis I",
+        "Incorrect alignment of non-homologous chromosomes along the equator during Metaphase II"
+      ],
+      answer: "Non-disjunction of homologous chromosomes during Anaphase I or sister chromatids during Anaphase II",
+      explanation: "Trisomy 21 (Down Syndrome) occurs due to non-disjunction. Either homologous chromosomes fail to separate in Anaphase I, or sister chromatids fail to separate in Anaphase II, creating an (n + 1) gamete with 24 chromosomes."
+    },
+    {
+      id: 'p1-m-4',
+      topic: 'p1-m',
+      question: "If a diploid somatic cell of an organism contains 2n = 8 chromosomes, how many individual chromatids are aligned along the equator during Metaphase I, and how many chromosomes are present at each pole by the end of Telophase I?",
+      options: [
+        "16 chromatids at Metaphase I; 4 chromosomes at each pole at Telophase I",
+        "8 chromatids at Metaphase I; 8 chromosomes at each pole at Telophase I",
+        "16 chromatids at Metaphase I; 2 chromosomes at each pole at Telophase I",
+        "32 chromatids at Metaphase I; 4 chromosomes at each pole at Telophase I"
+      ],
+      answer: "16 chromatids at Metaphase I; 4 chromosomes at each pole at Telophase I",
+      explanation: "At Metaphase I, 8 replicated chromosomes pair into 4 bivalents, totaling 16 chromatids. Because Meiosis I is a reduction division, each resulting nucleus at Telophase I receives n = 4 double-stranded chromosomes."
+    },
+    {
+      id: 'p1-m-5',
+      topic: 'p1-m',
+      question: "How does crossing over during Prophase I generate new combinations of alleles on a single chromosome?",
+      options: [
+        "Chiasmata form, leading to the physical breakage and reciprocal exchange of genetic material between non-sister chromatids of homologous pairs",
+        "Independent assortment causes maternal and paternal chromatids to fuse together permanently",
+        "Random fertilization pairs non-homologous chromatids together after meiotic division finishes",
+        "Sister chromatids exchange identical segments of DNA to double the mutation rate"
+      ],
+      answer: "Chiasmata form, leading to the physical breakage and reciprocal exchange of genetic material between non-sister chromatids of homologous pairs",
+      explanation: "During Prophase I synapsis, non-sister chromatids of homologous pairs overlap at points called chiasmata. They break and swap segments, breaking linked gene combinations and producing recombinant chromatids."
+    },
+
 
     // --- Human Reproduction & Endocrinology ---
     {
@@ -173,12 +301,65 @@ export const questionsData = {
     },
 
     // --- Plant Responses to the Environment ---
+
     {
       id: 'p1-pr-1',
       question: "Which plant growth substance is responsible for bringing about dormancy in seeds and buds?",
       options: ["Abscisic acid (ABA)", "Gibberellins", "Auxins", "Cytokinins"],
       answer: "Abscisic acid (ABA)",
       explanation: "Abscisic acid acts as a growth inhibitor that promotes seed dormancy and helps plants survive stress conditions like drought by closing stomata."
+    },
+    {
+      id: 'p1-pr-8',
+      topic: 'p1-pr',
+      question: "A plant coleoptile tip is exposed to unilateral light. An impermeable mica sheet is inserted vertically down the exact middle of the tip, fully separating the illuminated side from the shaded side. What growth response will occur?",
+      options: [
+        "The coleoptile grows straight upward because auxins cannot migrate laterally to the shaded side",
+        "The coleoptile bends toward the light because auxins accumulate on the illuminated side",
+        "The coleoptile bends away from the light because auxins are destroyed on the shaded side",
+        "Growth stops completely because the mica sheet halts auxin synthesis in the tip"
+      ],
+      answer: "The coleoptile grows straight upward because auxins cannot migrate laterally to the shaded side",
+      explanation: "Unilateral light drives auxins laterally from the illuminated side to the shaded side. The vertical mica sheet blocks lateral diffusion, keeping auxin concentration equal on both sides and producing straight upward growth."
+    },
+    {
+      id: 'p1-pr-9',
+      topic: 'p1-pr',
+      question: "A potted plant is placed horizontally in total darkness. Auxins accumulate on the lower side of both the stem and the root due to gravity. Why does the stem curve upward while the root curves downward?",
+      options: [
+        "High auxin concentration stimulates cell elongation in stems but inhibits cell elongation in roots",
+        "High auxin concentration inhibits cell elongation in stems but stimulates cell division in roots",
+        "Auxins are destroyed by gravity in the stem, but activated by gravity in the root",
+        "Auxins cause rapid cell division on the upper side of the stem and cell shrinkage in the root"
+      ],
+      answer: "High auxin concentration stimulates cell elongation in stems but inhibits cell elongation in roots",
+      explanation: "Root cells are significantly more sensitive to auxin than stem cells. High auxin concentrations on the lower side promote cell elongation in the stem (negative gravitropism), but inhibit cell elongation in the root, forcing the top side of the root to grow faster and bend down (positive gravitropism)."
+    },
+    {
+      id: 'p1-pr-10',
+      topic: 'p1-pr',
+      question: "Synthetic auxins like 2,4-D are used as selective herbicides in cereal crops. Why do broad-leaved weeds die after application while cereal crop plants remain largely unaffected?",
+      options: [
+        "Broad-leaved plants absorb auxins rapidly, triggering uncontrolled growth and structural collapse, whereas cereal leaves absorb far less",
+        "Synthetic auxins block stomatal opening in broad-leaved plants, causing immediate desiccation",
+        "Synthetic auxins inhibit cell division in dicot roots while serving as a metabolic fuel for monocots",
+        "Synthetic auxins trigger high abscisic acid synthesis, forcing broad-leaved weeds into premature dormancy"
+      ],
+      answer: "Broad-leaved plants absorb auxins rapidly, triggering uncontrolled growth and structural collapse, whereas cereal leaves absorb far less",
+      explanation: "Selective auxin weedkillers force broad-leaved (dicot) weeds into extremely rapid, uncoordinated growth. Their vascular tissues become distorted and crippled under metabolic stress, while narrow-leaved monocot cereal crops do not absorb or transport the chemical in lethal doses."
+    },
+    {
+      id: 'p1-pr-11',
+      topic: 'p1-pr',
+      question: "During prolonged drought, roots synthesize Abscisic Acid (ABA) and transport it to the leaves. What immediate ionic event in guard cells causes stomata to close?",
+      options: [
+        "Potassium ions ($K^+$) exit the guard cells, causing water to leave by osmosis and making the guard cells flaccid",
+        "Potassium ions ($K^+$) actively enter the guard cells, swelling them until the pore closes shut",
+        "Sodium ions ($Na^+$) rush into the guard cells, destroying the cell walls and sealing the opening",
+        "Abscisic acid breaks down starch into sugar, causing maximum turgor pressure in guard cells"
+      ],
+      answer: "Potassium ions ($K^+$) exit the guard cells, causing water to leave by osmosis and making the guard cells flaccid",
+      explanation: "ABA triggers the opening of efflux channels for potassium ions ($K^+$) in guard cell membranes. As $K^+$ leaves the cells, the water potential inside increases, causing water to flow out by osmosis. The guard cells lose turgor pressure and collapse, closing the stomatal pore to prevent water loss."
     },
     {
       id: 'p1-pr-2',
@@ -8332,23 +8513,70 @@ export const questionsData = {
 
 export function getRandomQuestions(subjectId, count = 10) {
   const list = questionsData[subjectId] || [];
-  const shuffled = [...list];
+  if (!list.length) return [];
 
+  // Helper for Fisher-Yates shuffle
+  const shuffle = (arr) => {
+    const copy = [...arr];
+    for (let i = copy.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [copy[i], copy[j]] = [copy[j], copy[i]];
+    }
+    return copy;
+  };
 
-  for (let i = shuffled.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  // 1. Group questions safely (converting IDs to strings to prevent crashes)
+  const topicsMap = {};
+
+  for (const q of list) {
+    let topicKey = q.topic;
+
+    // Safely infer prefix if q.id is a string/number with hyphens (e.g., 'p1-m-1' -> 'p1-m')
+    if (!topicKey && q.id !== undefined && q.id !== null) {
+      const idStr = String(q.id);
+      if (idStr.includes('-')) {
+        const parts = idStr.split('-');
+        if (parts.length > 1) {
+          topicKey = parts.slice(0, -1).join('-');
+        }
+      }
+    }
+
+    // Default to 'general' if no distinct prefix exists
+    topicKey = topicKey || 'general';
+
+    if (!topicsMap[topicKey]) {
+      topicsMap[topicKey] = [];
+    }
+    topicsMap[topicKey].push(q);
   }
 
-  return shuffled.slice(0, Math.min(count, shuffled.length)).map((q) => {
-    const options = [...q.options];
-    for (let i = options.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [options[i], options[j]] = [options[j], options[i]];
+  const topicKeys = Object.keys(topicsMap);
+  let selected = [];
+
+  // 2. Multi-Topic Subjects: Stratified round-robin draw
+  if (topicKeys.length > 1) {
+    const topicPools = Object.values(topicsMap).map((pool) => shuffle(pool));
+
+    while (selected.length < count) {
+      let addedAny = false;
+      for (const pool of topicPools) {
+        if (pool.length > 0) {
+          selected.push(pool.pop());
+          addedAny = true;
+          if (selected.length === count) break;
+        }
+      }
+      if (!addedAny) break;
     }
-    return {
-      ...q,
-      options,
-    };
-  });
+  } else {
+    // 3. Single Topic / Sequential ID Subjects: Full array random shuffle
+    selected = shuffle(list).slice(0, Math.min(count, list.length));
+  }
+
+  // 4. Randomize question display order and option choices
+  return shuffle(selected).map((q) => ({
+    ...q,
+    options: shuffle(q.options || []),
+  }));
 }

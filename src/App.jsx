@@ -6,6 +6,7 @@ import Leaderboard from './pages/Leaderboard';
 import MemeMode from './pages/MemeMode';
 import 'katex/dist/katex.min.css';
 import About from './pages/About';
+import LearnPage from './pages/LearnPage';
 
 export function MathExample() {
   return (
@@ -23,6 +24,7 @@ function App() {
         <Route path="/leaderboard" element={<Leaderboard />} />
         <Route path="/" element={<Dashboard />} />
         <Route path="/about" element={<About />} />
+        <Route path="/learn/:subjectId" element={<LearnPage />} />
         <Route path="/quiz/:subjectId" element={<Quiz />} />
         <Route path="/meme-mode/:subjectId" element={<MemeMode />} />
       </Routes>

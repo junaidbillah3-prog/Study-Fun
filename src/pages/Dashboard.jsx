@@ -209,6 +209,12 @@ export default function Dashboard() {
                   >
                     <Sparkles className="w-4 h-4" /> Meme Mode
                   </button>
+                  <button
+                    onClick={() => handleSubjectClick(subj, 'learn')}
+                    className="w-full text-center py-2 px-4 bg-emerald-600/80 hover:bg-emerald-600 text-white font-bold text-sm rounded-xl transition-all flex items-center justify-center gap-2 border border-emerald-500/30"
+                  >
+                    <BookOpen className="w-4 h-4 text-emerald-300" /> Learn Topic Notes
+                  </button>
                 </div>
               </div>
             );
@@ -227,31 +233,38 @@ export default function Dashboard() {
               </button>
 
               <h2 className="text-2xl font-bold text-white mb-1">
-                {selectedPaperSubject.subject.name} - {selectedPaperSubject.mode === 'meme-mode' ? 'Meme Mode' : 'Classic Quiz'}
+                {selectedPaperSubject.subject.name} - {
+                  selectedPaperSubject.mode === 'meme-mode'
+                    ? 'Meme Mode'
+                    : selectedPaperSubject.mode === 'learn'
+                      ? 'Study Notes'
+                      : 'Classic Quiz'
+                }
               </h2>
-              <p className="text-gray-400 mb-6 text-sm">Select an examination paper to start practice:</p>
-
-              {/* NEW: Question Count Selector */}
-              <div className="mb-6 bg-gray-800/60 p-3 rounded-xl border border-gray-700/50">
-                <label className="text-xs text-gray-400 uppercase font-bold tracking-wider mb-3 block text-center">
-                  How many questions?
-                </label>
-                <div className="flex gap-3">
-                  {[10, 20, 30].map(num => (
-                    <button
-                      key={num}
-                      onClick={() => setQuestionCount(num)}
-                      className={`flex-1 py-2 rounded-lg text-sm font-bold transition-all ${questionCount === num
-                        ? 'bg-blue-600 text-white shadow-lg shadow-blue-500/20'
-                        : 'bg-gray-900 text-gray-400 border border-gray-700 hover:bg-gray-800'
-                        }`}
-                    >
-                      {num}
-                    </button>
-                  ))}
+              <p className="text-gray-400 mb-6 text-sm">
+                {selectedPaperSubject.mode === 'learn' ? 'Select a topic paper to study:' : 'Select an examination paper to start practice:'}
+              </p>
+              {selectedPaperSubject.mode !== 'learn' && (
+                <div className="mb-6 bg-gray-800/60 p-3 rounded-xl border border-gray-700/50">
+                  <label className="text-xs text-gray-400 uppercase font-bold tracking-wider mb-3 block text-center">
+                    How many questions?
+                  </label>
+                  <div className="flex gap-3">
+                    {[10, 20, 30].map(num => (
+                      <button
+                        key={num}
+                        onClick={() => setQuestionCount(num)}
+                        className={`flex-1 py-2 rounded-lg text-sm font-bold transition-all ${questionCount === num
+                          ? 'bg-blue-600 text-white shadow-lg shadow-blue-500/20'
+                          : 'bg-gray-900 text-gray-400 border border-gray-700 hover:bg-gray-800'
+                          }`}
+                      >
+                        {num}
+                      </button>
+                    ))}
+                  </div>
                 </div>
-              </div>
-
+              )}
 
               <div className="space-y-4">
                 {selectedPaperSubject.subject.papers.map((paper) => (
@@ -261,8 +274,11 @@ export default function Dashboard() {
                       const mode = selectedPaperSubject.mode;
                       setSelectedPaperSubject(null);
 
-                      // NEW: Pass the questionCount in the URL
-                      navigate(`/${mode}/${paper.id}?count=${questionCount}`);
+                      if (mode === 'learn') {
+                        navigate(`/learn/${paper.id}`);
+                      } else {
+                        navigate(`/${mode}/${paper.id}?count=${questionCount}`);
+                      }
                     }}
                     className="w-full text-left group cursor-pointer rounded-xl border border-gray-800 bg-gray-800/50 p-4 transition-all hover:border-emerald-500/50 hover:bg-emerald-500/10"
                   >
