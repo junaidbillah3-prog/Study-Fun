@@ -1,5 +1,7 @@
+// src/pages/Leaderboard.jsx
+
 import { useEffect, useState } from 'react';
-import { supabase } from '../lib/supabaseClient';
+import { supabase } from '../lib/supabase'; // Updated import path to match project
 import { Trophy, Medal, ArrowLeft } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
@@ -14,15 +16,10 @@ export default function Leaderboard() {
   const fetchLeaderboard = async () => {
     setLoading(true);
 
-    // 1. Join the 'profiles' table using the foreign key relationship
+    // Fetch directly from the leaderboard table
     const { data, error } = await supabase
       .from('leaderboard')
-      .select(`
-        *,
-        profiles (
-          username
-        )
-      `)
+      .select('*')
       .order('points', { ascending: false })
       .limit(20);
 
@@ -52,7 +49,9 @@ export default function Leaderboard() {
         {loading ? (
           <p className="text-center text-gray-400 py-8">Loading rankings...</p>
         ) : scores.length === 0 ? (
-          <p className="text-center text-gray-400 py-8">No scores recorded yet. Take a quiz to gain points!</p>
+          <p className="text-center text-gray-400 py-8">
+            No scores recorded yet. Take a quiz to gain points!
+          </p>
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full text-left border-collapse">
@@ -65,7 +64,7 @@ export default function Leaderboard() {
               </thead>
               <tbody className="divide-y divide-gray-700/50 text-gray-200 font-medium">
                 {scores.map((entry, index) => (
-                  <tr key={entry.id} className="hover:bg-gray-700/30 transition-all">
+                  <tr key={entry.id || index} className="hover:bg-gray-700/30 transition-all">
                     <td className="py-4 px-4 flex items-center gap-2">
                       {index === 0 && <Medal className="w-5 h-5 text-yellow-400" />}
                       {index === 1 && <Medal className="w-5 h-5 text-gray-300" />}
@@ -73,13 +72,13 @@ export default function Leaderboard() {
                       {index > 2 && <span className="text-gray-500 font-bold pl-2">#{index + 1}</span>}
                     </td>
                     
-                    {/* 2. Read live username from profiles with fallback */}
+                    {/* Read username directly from the leaderboard entry */}
                     <td className="py-4 px-4 font-semibold text-white">
-                      {entry.profiles?.username || entry.username || 'Default User'}
+                      {entry.username || 'Anonymous Student'}
                     </td>
                     
                     <td className="py-4 px-4 text-right font-extrabold text-emerald-400 text-lg">
-                      {entry.points.toLocaleString()} pts
+                      {entry.points ? entry.points.toLocaleString() : 0} pts
                     </td>
                   </tr>
                 ))}
