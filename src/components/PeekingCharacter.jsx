@@ -11,6 +11,9 @@ export default function PeekingCharacter() {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
+    let showTimer;
+    let hideTimer;
+
     const peekAction = () => {
       // 1. Pick a random character from the list
       const randomChar = CHARACTERS[Math.floor(Math.random() * CHARACTERS.length)];
@@ -24,19 +27,25 @@ export default function PeekingCharacter() {
       // 3. Randomize vertical height (15% to 75%)
       const randomTop = Math.floor(Math.random() * 60) + 15;
 
-      // 4. Extract message (supports a single string or an array of multiple quotes)
+      // 4. Extract message (supports single string or array of quotes)
       let selectedText = randomChar.message || 'Hi! 🤭';
       if (Array.isArray(selectedText)) {
         selectedText = selectedText[Math.floor(Math.random() * selectedText.length)];
       }
 
+      // 5. Update character data off-screen FIRST
       setCurrentChar(randomChar);
       setCurrentMessage(selectedText);
       setSide(chosenSide);
       setTopPosition(randomTop);
-      setIsVisible(true);
 
-      setTimeout(() => {
+      // 6. Delay visibility slightly so DOM & image update before sliding in
+      showTimer = setTimeout(() => {
+        setIsVisible(true);
+      }, 50);
+
+      // 7. Hide character after display time
+      hideTimer = setTimeout(() => {
         setIsVisible(false);
       }, 3500);
     };
@@ -46,6 +55,8 @@ export default function PeekingCharacter() {
 
     return () => {
       clearTimeout(initialTimer);
+      clearTimeout(showTimer);
+      clearTimeout(hideTimer);
       clearInterval(interval);
     };
   }, []);
