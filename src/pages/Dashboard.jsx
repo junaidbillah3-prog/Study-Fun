@@ -329,7 +329,7 @@ export default function Dashboard() {
                   >
                     <div className="flex items-center gap-3">
                       <Coins className="w-4 h-4 text-yellow-400 group-hover:rotate-12 transition-transform" />
-                      <span>Support DEV</span>
+                      <span>Developer</span>
                     </div>
                     <span className="text-[10px] font-extrabold bg-yellow-500/20 text-yellow-400 border border-yellow-500/40 px-2 py-0.5 rounded-full uppercase tracking-wider">
                       Support
