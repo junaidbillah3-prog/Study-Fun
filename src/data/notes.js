@@ -39,7 +39,7 @@ export const NOTES_DATA = {
                         },
                         {
                             type: 'text',
-                            content: '$$\\text{Chromosome} \\longrightarrow \\text{Replicated (2 Sister Chromatids)}$$'
+                            content: '$$\\text{Chromosome} \\longrightarrow \\text{Replicated }$$'
                         },
                         {
                             type: 'text',
