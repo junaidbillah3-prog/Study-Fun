@@ -25,16 +25,15 @@ export default function PaperSelectorModal({ subject, onClose }) {
             <div
               key={paper.id}
               onClick={() => navigate(`/quiz/${paper.id}`)}
-              className="group cursor-pointer rounded-xl border border-slate-800 bg-slate-800/50 p-4 transition-all hover:border-emerald-500/50 hover:bg-emerald-500/10"
+              className="group cursor-pointer rounded-xl border border-slate-800 bg-slate-800/50 p-3 sm:p-4 transition-all hover:border-emerald-500/50 hover:bg-emerald-500/10"
             >
-              <div className="flex items-center justify-between mb-1">
+              <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
-                  <FileText className="h-5 w-5 text-emerald-400" />
-                  <h3 className="font-semibold text-white">{paper.name}</h3>
+                  <FileText className="h-4 w-4 sm:h-5 sm:w-5 text-emerald-400 shrink-0" />
+                  <h3 className="text-sm sm:text-base font-semibold text-white">{paper.name}</h3>
                 </div>
-                <ArrowRight className="h-4 w-4 text-slate-500 transition-transform group-hover:translate-x-1 group-hover:text-emerald-400" />
+                <ArrowRight className="h-4 w-4 text-slate-500 transition-transform group-hover:translate-x-1 group-hover:text-emerald-400 shrink-0" />
               </div>
-              <p className="text-xs text-slate-400">{paper.description}</p>
             </div>
           ))}
         </div>
