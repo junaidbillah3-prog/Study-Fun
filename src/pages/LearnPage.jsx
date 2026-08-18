@@ -165,9 +165,9 @@ export default function LearnPage() {
                 <div className="relative">
                   <button
                     onClick={() => setIsJumpOpen((prev) => !prev)}
-                    className="flex items-center gap-1.5 bg-gray-800 hover:bg-gray-700 text-emerald-400 border border-gray-700 px-3 py-1.5 rounded-lg text-xs font-bold transition-all"
+                    className="flex items-center gap-1.5 bg-yellow-500 hover:bg-yellow-700 text-gray-900 border border-red-700 px-3 py-1.5 rounded-lg text-xs font-bold transition-all"
                   >
-                    <List className="w-4 h-4 text-emerald-400" />
+                    <List className="w-4 h-4 text-gray-900" />
                     <span>Jump to</span>
                     <ChevronDown
                       className={`w-3.5 h-3.5 transition-transform duration-200 ${
