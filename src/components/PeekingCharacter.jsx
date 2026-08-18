@@ -6,7 +6,6 @@ import { CHARACTERS } from '../data/charlist';
 export default function PeekingCharacter() {
   const [currentChar, setCurrentChar] = useState(null);
   const [currentMessage, setCurrentMessage] = useState('');
-  const [topPosition, setTopPosition] = useState(50);
   const [side, setSide] = useState('right');
   const [isVisible, setIsVisible] = useState(false);
 
@@ -24,27 +23,23 @@ export default function PeekingCharacter() {
         chosenSide = Math.random() > 0.5 ? 'right' : 'left';
       }
 
-      // 3. Randomize vertical height (15% to 75%)
-      const randomTop = Math.floor(Math.random() * 60) + 15;
-
-      // 4. Extract message (supports single string or array of quotes)
+      // 3. Extract message (supports single string or array of quotes)
       let selectedText = randomChar.message || 'Hi! 🤭';
       if (Array.isArray(selectedText)) {
         selectedText = selectedText[Math.floor(Math.random() * selectedText.length)];
       }
 
-      // 5. Update character data off-screen FIRST
+      // 4. Update character data off-screen FIRST
       setCurrentChar(randomChar);
       setCurrentMessage(selectedText);
       setSide(chosenSide);
-      setTopPosition(randomTop);
 
-      // 6. Delay visibility slightly so DOM & image update before sliding in
+      // 5. Delay visibility slightly so DOM & image update before sliding in
       showTimer = setTimeout(() => {
         setIsVisible(true);
       }, 100);
 
-      // 7. Hide character after display time
+      // 6. Hide character after display time
       hideTimer = setTimeout(() => {
         setIsVisible(false);
       }, 3500);
@@ -67,7 +62,7 @@ export default function PeekingCharacter() {
 
   return (
     <div
-      className={`fixed z-50 pointer-events-none transition-all duration-500 ease-out transform ${
+      className={`absolute top-32 z-50 pointer-events-none transition-all duration-500 ease-out transform ${
         isLeft ? 'left-0' : 'right-0'
       } ${
         isVisible
@@ -76,7 +71,6 @@ export default function PeekingCharacter() {
           ? '-translate-x-full scale-50 opacity-0'
           : 'translate-x-full scale-50 opacity-0'
       }`}
-      style={{ top: `${topPosition}%` }}
     >
       <div
         className={`relative flex items-center gap-2 ${
