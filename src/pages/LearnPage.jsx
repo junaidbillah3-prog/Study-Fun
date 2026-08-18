@@ -7,9 +7,11 @@ import {
   Lightbulb,
   FileText,
   ChevronRight,
+  ChevronDown,
   Download,
   ExternalLink,
   Image as ImageIcon,
+  List,
 } from 'lucide-react';
 import MathText from '../components/MathText';
 import { NOTES_DATA } from '../data/notes.js';
@@ -39,8 +41,25 @@ export default function LearnPage() {
 
   // null = showing Topic List Menu; string = showing selected topic reader view
   const [selectedTopicId, setSelectedTopicId] = useState(null);
+  // State for toggling "Jump to" section menu
+  const [isJumpOpen, setIsJumpOpen] = useState(false);
 
   const activeTopic = topics.find((t) => t.id === selectedTopicId);
+
+  // Helper function to strip HTML tags for clean menu labels
+  const getCleanHeading = (headingStr) => {
+    return headingStr
+      ? headingStr.replace(/<[^>]*>?/gm, '').replace(/&bull;/g, '').trim()
+      : 'Section';
+  };
+
+  const handleJumpToSection = (index) => {
+    const el = document.getElementById(`section-${index}`);
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+    setIsJumpOpen(false);
+  };
 
   return (
     <div className="min-h-screen bg-gray-950 text-white p-4 sm:p-6 max-w-4xl mx-auto flex flex-col">
@@ -74,7 +93,10 @@ export default function LearnPage() {
             {topics.map((topic) => (
               <button
                 key={topic.id}
-                onClick={() => setSelectedTopicId(topic.id)}
+                onClick={() => {
+                  setSelectedTopicId(topic.id);
+                  setIsJumpOpen(false);
+                }}
                 className="w-full text-left bg-gray-900/80 border border-gray-800 hover:border-emerald-500/50 hover:bg-gray-800/80 p-5 rounded-2xl transition-all group flex items-center justify-between shadow-md"
               >
                 <div className="space-y-1 pr-4">
@@ -115,23 +137,68 @@ export default function LearnPage() {
           {/* Navigation bar inside topic */}
           <div className="flex items-center justify-between bg-gray-900/90 border border-gray-800 p-3 sm:p-4 rounded-xl">
             <button
-              onClick={() => setSelectedTopicId(null)}
+              onClick={() => {
+                setSelectedTopicId(null);
+                setIsJumpOpen(false);
+              }}
               className="flex items-center gap-2 text-xs sm:text-sm font-bold text-emerald-400 hover:text-emerald-300 bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-500/30 px-3 py-1.5 rounded-lg transition-all"
             >
               <ArrowLeft className="w-4 h-4" /> All Topics
             </button>
 
-            {activeTopic.pdfUrl && (
-              <a
-                href={activeTopic.pdfUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 bg-gray-800 hover:bg-gray-700 text-gray-300 border border-gray-700 px-3 py-1.5 rounded-lg text-xs font-bold transition-all"
-              >
-                <Download className="w-3.5 h-3.5 text-emerald-400" /> PDF Summary
-                <ExternalLink className="w-3 h-3 text-gray-400" />
-              </a>
-            )}
+            <div className="flex items-center gap-2">
+              {/* PDF Link (if present) */}
+              {activeTopic.pdfUrl && (
+                <a
+                  href={activeTopic.pdfUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 bg-gray-800 hover:bg-gray-700 text-gray-300 border border-gray-700 px-3 py-1.5 rounded-lg text-xs font-bold transition-all"
+                >
+                  <Download className="w-3.5 h-3.5 text-emerald-400" /> PDF
+                  <ExternalLink className="w-3 h-3 text-gray-400" />
+                </a>
+              )}
+
+              {/* JUMP TO DROPDOWN MENU */}
+              {activeTopic.sections && activeTopic.sections.length > 0 && (
+                <div className="relative">
+                  <button
+                    onClick={() => setIsJumpOpen((prev) => !prev)}
+                    className="flex items-center gap-1.5 bg-gray-800 hover:bg-gray-700 text-emerald-400 border border-gray-700 px-3 py-1.5 rounded-lg text-xs font-bold transition-all"
+                  >
+                    <List className="w-4 h-4 text-emerald-400" />
+                    <span>Jump to</span>
+                    <ChevronDown
+                      className={`w-3.5 h-3.5 transition-transform duration-200 ${
+                        isJumpOpen ? 'rotate-180' : ''
+                      }`}
+                    />
+                  </button>
+
+                  {isJumpOpen && (
+                    <div className="absolute right-0 mt-2 w-64 max-h-80 overflow-y-auto bg-gray-900 border border-gray-700 rounded-xl shadow-2xl z-50 p-2 space-y-1 backdrop-blur-lg">
+                      <div className="text-[11px] font-bold uppercase tracking-wider text-gray-400 px-3 py-1.5 border-b border-gray-800 flex justify-between items-center">
+                        <span>Sections</span>
+                        <span className="text-emerald-400">{activeTopic.sections.length}</span>
+                      </div>
+                      {activeTopic.sections.map((sec, idx) => (
+                        <button
+                          key={idx}
+                          onClick={() => handleJumpToSection(idx)}
+                          className="w-full text-left px-3 py-2 text-xs text-gray-300 hover:bg-emerald-500/10 hover:text-emerald-300 rounded-lg transition-colors flex items-center justify-between group"
+                        >
+                          <span className="truncate pr-2">
+                            {getCleanHeading(sec.heading)}
+                          </span>
+                          <ChevronRight className="w-3 h-3 text-gray-500 group-hover:text-emerald-400 transition-colors flex-shrink-0" />
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
           </div>
 
           {/* Reading Container */}
@@ -154,7 +221,8 @@ export default function LearnPage() {
               {activeTopic.sections.map((sec, idx) => (
                 <div
                   key={idx}
-                  className="bg-gray-800/40 border border-gray-700/50 p-4 sm:p-6 rounded-xl space-y-4"
+                  id={`section-${idx}`}
+                  className="bg-gray-800/40 border border-gray-700/50 p-4 sm:p-6 rounded-xl space-y-4 scroll-mt-6"
                 >
                   <h2 className="font-bold text-base sm:text-lg text-white flex items-center gap-2">
                     <CheckCircle className="w-4 h-4 text-emerald-400 flex-shrink-0" />
@@ -234,7 +302,10 @@ export default function LearnPage() {
             {/* Bottom Actions */}
             <div className="mt-8 pt-6 border-t border-gray-800 flex justify-between items-center">
               <button
-                onClick={() => setSelectedTopicId(null)}
+                onClick={() => {
+                  setSelectedTopicId(null);
+                  setIsJumpOpen(false);
+                }}
                 className="text-xs sm:text-sm text-gray-400 hover:text-white transition-colors flex items-center gap-1"
               >
                 <ArrowLeft className="w-4 h-4" /> Back to Topic List
